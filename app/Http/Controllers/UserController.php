@@ -90,7 +90,7 @@ class UserController extends Controller
             'image' => 'image',
             'cin' => ['required', 'string', 'max:255'],
             'adress' => ['required', 'string', 'max:1000'],
-            'phone_number' => ['required', 'string', 'max:10','min:10','unique:users'],
+            'phone_number' => ['required', 'string', 'max:10','min:10',Rule::unique('users')->ignore($user->id)],
 
 
         ]);
