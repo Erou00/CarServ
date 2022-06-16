@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleTable::class);
         $this->call(UserTable::class);
         $this->call(CarbirantTable::class);
+        $this->call(OriginTable::class);
+        $this->call(KilometerSeeder::class);
+
     }
 }

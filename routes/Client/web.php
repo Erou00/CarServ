@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Dashboard\ClientController;
-use App\Http\Controllers\Dashboard\ServiceController;
+use App\Http\Controllers\Client\CarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,24 +18,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
 
-    'middleware' => ['auth','admin'],
-    'prefix' => 'dashboard',
+    'middleware' => ['auth','client'],
+
     'name' => 'dashboard.'
 
 
 ], function ($router) {
     Route::get('/', function () {
-        return view('dashboard.index');
+        return view('welcome');
     });
 
-    Route::resource('clients',ClientController::class);
-    Route::resource('services',ServiceController::class);
-    Route::resource('demandes',ServiceController::class);
+    Route::resource('cars',CarController::class);
+
 
 });
-
+Route::post('/models',[CarController::class, 'models'])->name('getModel');
 Auth::routes();
-
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

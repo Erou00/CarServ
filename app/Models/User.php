@@ -95,4 +95,10 @@ class User extends Authenticatable
         return asset('uploads/users_images/'.$this->image);
     }
 
+    public function cars()
+    {
+        # code..
+        return $this->hasMany(Car::class);
+    }
+
 }

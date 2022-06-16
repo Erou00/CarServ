@@ -34,5 +34,19 @@ class UserTable extends Seeder
         ]);
 
         $admin->roles()->attach($adminRole);
+
+        $clientRole = Role::where('name','client')->first();
+        $client = User::create([
+            'last_name' => 'ayoub',
+            'first_name' => 'essahat',
+            'cin' => 'AD875412',
+            'email' => 'ayoub_esst@live.fr',
+            'adress' => 'adress',
+            'phone_number' => '0689451278',
+            'image'=>'default.png',
+            'password' => Hash::make('123456789'),
+        ]);
+
+        $client->roles()->attach($clientRole);
     }
 }

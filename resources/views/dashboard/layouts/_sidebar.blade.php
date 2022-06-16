@@ -46,28 +46,56 @@
             </li>
 
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
-                    <i class="uil uil-file-plus"></i>
+                <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link">
+                    <i class="uil-store"></i>
                     <span> Demandes </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <div class="collapse" id="sidebarEcommerce">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="">All Demandes</a>
+                        </li>
+                        <li>
+                            <a href="">New Demandes</a>
+                        </li>
+                        <li>
+                            <a href="">Historique</a>
+                        </li>
 
+                    </ul>
+                </div>
             </li>
 
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
-                    <i class="uil uil-car-sideview"></i>
+                <a data-bs-toggle="collapse" href="#sidebarCars" aria-expanded="false" aria-controls="sidebarCars" class="side-nav-link">
+                    <i class="uil-car"></i>
                     <span> Cars </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <div class="collapse" id="sidebarCars">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="">All Cars</a>
+                        </li>
+                        <li>
+                            <a href="">Cars for sell</a>
+                        </li>
+                        <li>
+                            <a href="">Marks</a>
+                        </li>
+                        <li>
+                            <a href="">Models</a>
+                        </li>
+                        <li>
+                            <a href="">Carbirant</a>
+                        </li>
 
+                    </ul>
+                </div>
             </li>
 
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
-                    <i class="uil uil-car-sideview"></i>
-                    <span> Cars for sell </span>
-                </a>
 
-            </li>
 
 
             <li class="side-nav-item">
