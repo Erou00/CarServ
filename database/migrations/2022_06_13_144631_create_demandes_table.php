@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('address');
             $table->text('comment')->nullable();
             $table->text('motif')->nullable();
-            $table->text('etat')->default('new');
+            $table->text('etat')->default('In progress');
             $table->integer('user_id')->references('id')->on('users');
             $table->integer('admin_id')->references('id')->on('users')->nullable();
             $table->integer('mechanic_id')->references('id')->on('users')->nullable();

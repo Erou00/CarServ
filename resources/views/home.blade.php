@@ -43,6 +43,12 @@
                                     <h6>Cars</h6>
                                 </a>
                             </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="{{route('demandes.clientDemandes')}}">
+                                    <h6>Demandes</h6>
+                                </a>
+                            </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">

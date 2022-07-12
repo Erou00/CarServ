@@ -38,7 +38,7 @@
                         @foreach ($clients as $client)
                             <tr>
                                 <td>
-                                    <img src="{{ isset(Auth::user()->image) ? asset(Auth::user()->image_path) : asset('img/user.jpg')}}" alt="contact-img" title="contact-img" class="rounded me-3" height="48">
+                                    <img src="{{ isset($client->image) ? asset($client->image_path) : asset('img/user.jpg')}}" alt="contact-img" title="contact-img" class="rounded me-3" height="48">
                                 </td>
                                 <td>
                                 {{$client->first_name.' '.$client->first_name}}</td>
@@ -47,9 +47,9 @@
                                 <td>{{$client->cin}}</td>
                                 <td>{{$client->adress}}</td>
                                 <td>
-                                    <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                    <a href="{{route('dashboard.clients.show',$client->id)}}" class="action-icon"> <i class="mdi mdi-eye"></i></a>
 
-                                    <form action="{{ route('clients.destroy', $client->id) }}" method="POST"
+                                    <form action="{{ route('dashboard.clients.destroy', $client->id) }}" method="POST"
                                         style="display: inline-block">
                                        @csrf
                                        @method('DELETE')

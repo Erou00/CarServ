@@ -52,9 +52,11 @@ class ClientController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         //
+        $client = User::find($id);
+        return view('dashboard.clients.client-details',['user'=>$client]);
     }
 
     /**
@@ -99,6 +101,6 @@ class ClientController extends Controller
         $user->delete();
         session()->flash('success','deleted');
 
-        return redirect()->route('clients.index');
+        return redirect()->route('dashboard.clients.index');
     }
 }

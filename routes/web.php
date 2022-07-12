@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +20,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::post('/models',[HomeController::class, 'models'])->name('getModel');
+
+Route::get('/car-for-sale',[HomeController::class,'carForSale'])->name('carForSale');
+Route::get('/car-for-sale/{slug}',[HomeController::class,'carDetails'])->name('carDetails');
+Route::get('/products',[HomeController::class,'products'])->name('products');
+Route::get('/products/{slug}',[HomeController::class,'productDetails'])->name('productDetails');
+
+Route::post('/cart',[CartController::class,'store'])->name('cart');
+
 
 Route::resource('users',UserController::class);
 

@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
 use  Image;
 
 class CarController extends Controller
@@ -100,20 +102,44 @@ class CarController extends Controller
         if ($request->for_sale) {
             # code...
             $this->validate($request,[
+                'title' => 'required',
                 'fiscal_power' => 'required',
                 'kilo' => 'required',
                 'doors' => 'required',
                 'origin_id' => 'required',
                 'gear_box' => 'required',
                 'first_hand' => 'required',
+                'images' => 'required',
+                'images.*' => 'mimes:jpeg,jpg,png',
+                'description' => 'required',
+                'price' => 'required'
             ]);
 
+            $request_data = [];
+            if($request->hasfile('images')) {
+
+                 foreach ($request->images as $image) {
+                    # code...
+                    Image::make($image)->resize(1020, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save(public_path('uploads/cars_images/'.$image->hashName()));
+
+                    array_push($request_data,$image->hashName());
+                 }
+
+            }
+
+            $car->title=$request->title;
+            $car->slug=Str::of($request->title)->slug('-');
             $car->for_sale=true;
             $car->fiscal_power=$request->fiscal_power;
-            $car->kilometres=$request->kilo;
+            $car->kilometre_id=$request->kilo;
             $car->doors=$request->doors;
-            $car->origin=$request->origin_id;
+            $car->origin_id=$request->origin_id;
             $car->gearbox=$request->gear_box;
+            $car->images =  json_encode($request_data) ;
+            $car->description = $request->description;
+            $car->price = $request->price;
             $car->first_hand=($request->first_hand == "yes") ? true:false;
         }
 
@@ -203,21 +229,48 @@ class CarController extends Controller
          if ($request->for_sale) {
             # code...
             $this->validate($request,[
+                'title' => 'required',
                 'fiscal_power' => 'required',
                 'kilo' => 'required',
                 'doors' => 'required',
                 'origin_id' => 'required',
                 'gear_box' => 'required',
                 'first_hand' => 'required',
+                'description' => 'required',
+                'price' => 'required'
             ]);
 
+            $request_data = [];
+
+            if ($request->hasFile('images')) {
+                foreach ( json_decode($car->images) as $image) {
+                Storage::disk('public_uploads')->delete('cars_images/'.$image);
+                }
+
+                foreach ($request->images as $image) {
+                    # code...
+                    Image::make($image)->resize(1020, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save(public_path('uploads/cars_images/'.$image->hashName()));
+
+                    array_push($request_data,$image->hashName());
+                 }
+
+                 $car->images = json_encode($request_data);
+
+            }
+
+            $car->price = $request->price;
+            $car->title=$request->title;
+            $car->slug=Str::of($request->title)->slug('-');
             $car->for_sale=true;
             $car->fiscal_power=$request->fiscal_power;
-            $car->kilometres=$request->kilo;
+            $car->kilometre_id=$request->kilo;
             $car->doors=$request->doors;
-            $car->origin=$request->origin_id;
+            $car->origin_id=$request->origin_id;
             $car->gearbox=$request->gear_box;
             $car->first_hand=($request->first_hand == "yes") ? true:false;
+            $car->description=$request->description;
         }
 
 
@@ -237,26 +290,19 @@ class CarController extends Controller
         //
 
 
+        Storage::disk('public_uploads')->delete('carte_grise/'.$car->carte_grise_back);
+        Storage::disk('public_uploads')->delete('carte_grise/'.$car->carte_grise_front);
+
+        if ($car->images) {
+            # code...
+            foreach ( json_decode($car->images) as $key=>$image) {
+            Storage::disk('public_uploads')->delete('cars_images/'.$image[$key]);
+            }
+        }
+
         $car->delete();
         return redirect()->back();
     }
 
-    public function models(Request $request)
-    {
-        //
-        $select = $request->get('select');
-        $value = $request->get('value');
-        $dependent = $request->get('dependent');
-        $data = DB::table('cmodels')
-          ->where('MarqueId',$value)
-          ->get();
 
-        // Select '.ucfirst($dependent).
-        $output = '<option value="">Choose</option>';
-        foreach($data as $row)
-        {
-         $output .= '<option value="'.$row->id.'">'.$row->$dependent.'</option>';
-        }
-        echo $output;
-    }
 }

@@ -30,7 +30,7 @@
 
 
             <li class="side-nav-item">
-                <a  href="{{route('clients.index')}}"   class="side-nav-link">
+                <a  href="{{route('dashboard.clients.index')}}"   class="side-nav-link">
                     <i class="uil-users-alt"></i>
                     <span> Clients </span>
                 </a>
@@ -38,7 +38,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a  href="{{route('services.index')}}"  class="side-nav-link">
+                <a  href="{{route('dashboard.services.index')}}"  class="side-nav-link">
                     <i class="mdi mdi-shape-plus"></i>
                     <span> Services </span>
                 </a>
@@ -76,10 +76,10 @@
                 <div class="collapse" id="sidebarCars">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="">All Cars</a>
+                            <a href="{{route('dashboard.cars.index')}}">All Cars</a>
                         </li>
                         <li>
-                            <a href="">Cars for sell</a>
+                            <a href="{{route('dashboard.carForSale')}}">Cars for sell</a>
                         </li>
                         <li>
                             <a href="">Marks</a>
@@ -99,7 +99,7 @@
 
 
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                <a  href="{{route('dashboard.products.index')}}" class="side-nav-link">
                     <i class="uil uil-cart"></i>
                     <span> Products </span>
                 </a>
@@ -118,7 +118,7 @@
 
 
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                <a  href="{{route('dashboard.mechanics.index')}}"  aria-controls="sidebarDashboards" class="side-nav-link">
                     <i class="dripicons-gear "></i>
                     <span> mechanic </span>
                 </a>

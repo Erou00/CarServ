@@ -19,8 +19,9 @@
     font-weight: bold
 }
 
-
-
+.ck{
+    height: 30vh;
+}
 
 
 
@@ -105,10 +106,25 @@
                             <div class="col-md-9 offset-md-3">
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input"
-                                     {{((isset($vehicule) && $vehicule->for_sale) || $errors->get('origin_id') || $errors->get('fiscal_power') || $errors->get('kilo')|| $errors->get('doors')|| $errors->get('first_hand') || $errors->get('gear_box')) ? 'checked' : ''}}
+                                                                    {{((isset($vehicule) && $vehicule->for_sale) || $errors->get('origin_id') || $errors->get('fiscal_power') || $errors->get('kilo')|| $errors->get('doors')|| $errors->get('first_hand') || $errors->get('gear_box') || $errors->get('description') || $errors->get('images') ) ? 'checked' : ''}}
                                     value="true" name="for_sale" id="forsale">
-                                    <label class="form-check-label" for="exampleCheck1">For Sale</label>
+                                    <label class="form-check-label" for="forsale">For Sale</label>
                                   </div>
+                            </div>
+                            </div>
+
+
+                            <div class="mb-3 row">
+                                <label for="title" class="col-md-3 col-form-label">Annonce Title</label>
+                            <div class="col-md-9">
+
+                                <input type="text" class="form-control" name="title" id="title"
+                                value="{{(isset($vehicule) ? $vehicule->title:'')}}">
+                                   @error('title')
+                                   <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $message }}</strong>
+                                   </span>
+                                   @enderror
                             </div>
                             </div>
 
@@ -121,7 +137,7 @@
 
                                 <option option value="" >Choose</option>
                                 @foreach ($origins as $origin)
-                                <option  {{ (isset($vehicule) && ($vehicule->origin == $origin ->id )? "selected":"")}}  value="{{$origin->id}}">{{$origin->origin}}</option>
+                                <option  {{ (isset($vehicule) && ($vehicule->origin_id == $origin ->id )? "selected":"")}}  value="{{$origin->id}}">{{$origin->origin}}</option>
                                 @endforeach
 
                                    </select>
@@ -142,7 +158,7 @@
                                 aria-label="Default select example" style="appearance: auto;">
                                 <option option value="" >Choose</option>
                                 @foreach ($kilometers as $kilo)
-                                <option  {{ (isset($vehicule) && ($vehicule->kilometres == $kilo ->id )? "selected":"")}}  value="{{$kilo->id}}">{{$kilo->kilometers}}</option>
+                                <option  {{ (isset($vehicule) && ($vehicule->kilometre_id == $kilo ->id )? "selected":"")}}  value="{{$kilo->id}}">{{$kilo->kilometers}}</option>
                                 @endforeach
                                    </select>
                                    @error('kilo')
@@ -161,12 +177,27 @@
 
                                     <option option value="" >Choose</option>
 
-                                    <option    value="yes">Yes</option>
-                                    <option   value="no">No</option>
+                                    <option  {{ (isset($vehicule) && ($vehicule->first_hand == true )? "selected":"")}}  value="yes">Yes</option>
+                                    <option  {{ (isset($vehicule) && ($vehicule->first_hand == false )? "selected":"")}} value="no">No</option>
 
 
                                    </select>
                                    @error('first_hand')
+                                   <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $message }}</strong>
+                                   </span>
+                                   @enderror
+                            </div>
+                            </div>
+
+                            <div class="mb-3 row sale">
+                                <label for="price" class="col-md-3 col-form-label">Price</label>
+                            <div class="col-md-9">
+
+                                <input type="number" class="form-control" name="price" id="price"
+                                value="{{( isset($vehicule) ? $vehicule->price:'')}}">
+
+                                   @error('price')
                                    <span class="invalid-feedback" role="alert">
                                        <strong>{{ $message }}</strong>
                                    </span>
@@ -267,8 +298,8 @@
                                 <select name="gear_box" id="grar_box" class="form-control" data-dependent="grar_box"
                                 aria-label="Default select example" style="appearance: auto;">>
                                 <option value="">choose</option>
-                                <option value="automatique">Automatique</option>
-                                <option value="manual">Manual</option>
+                                <option {{ (isset($vehicule) && ($vehicule->gearbox == "automatique" )? "selected":"")}}  value="automatique">Automatique</option>
+                                <option {{ (isset($vehicule) && ($vehicule->gearbox == "manual" )? "selected":"")}}  value="manual">Manual</option>
                                    </select>
                                    @error('gear_box')
                                    <span class="invalid-feedback" role="alert">
@@ -287,10 +318,23 @@
 
 
                                         <option value="">choose</option>
-                                        <option value="3">3</option>
-                                        <option value="5">5</option>
+                                        <option {{ (isset($vehicule) && ($vehicule->doors == 3 )? "selected":"")}}  value="3">3</option>
+                                        <option {{ (isset($vehicule) && ($vehicule->doors == 5 )? "selected":"")}} value="5">5</option>
                                    </select>
                                    @error('doors')
+                                   <span class="invalid-feedback" role="alert">
+                                       <strong>{{ $message }}</strong>
+                                   </span>
+                                   @enderror
+                            </div>
+                            </div>
+
+                            <div class="mb-3 row sale">
+                                <label for="images" class="col-md-3 col-form-label">Images</label>
+                            <div class="col-md-9">
+
+                                <input type="file" class="form-select form-control" id="images" name="images[]" multiple>
+                                   @error('images')
                                    <span class="invalid-feedback" role="alert">
                                        <strong>{{ $message }}</strong>
                                    </span>
@@ -302,6 +346,20 @@
 
 
 
+                        </div>
+
+                        <div class="form-group mb-3 sale">
+                            <label class="mb-2">description</label>
+                            <textarea name="description"
+                             class="form-control ckeditor @error('description') is-invalid @enderror">
+                                {{ isset($vehicule) ? $vehicule->description:""}}
+                            </textarea>
+
+                            @error('description')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
 
                 <button class="btn btn-primary" type="submit">Submit form</button>
@@ -318,10 +376,10 @@
 
 @section('scripts')
 
-
+<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 <script>
 $(".sale").hide();
-@if ( (isset($vehicule) && $vehicule->for_sale) || $errors->get('origin_id') || $errors->get('fiscal_power') || $errors->get('kilo')|| $errors->get('doors')|| $errors->get('first_hand') || $errors->get('gear_box') )
+@if ( (isset($vehicule) && $vehicule->for_sale) || $errors->get('origin_id') || $errors->get('fiscal_power') || $errors->get('kilo')|| $errors->get('doors')|| $errors->get('first_hand') || $errors->get('gear_box') || $errors->get('description') || $errors->get('images'))
 $(".sale").show(300);
 @endif
 $("#forsale").click(function() {
@@ -331,6 +389,7 @@ $("#forsale").click(function() {
         $(".sale").hide(200);
     }
 });
+
 
     $(document).ready(function(){
             $('.dynamic').change(function(){
@@ -363,5 +422,16 @@ $("#forsale").click(function() {
                 });
 
     })
+
+
+
+
+
+ClassicEditor
+.create( document.querySelector( '.ckeditor' ) )
+.catch( error => {
+console.error( error );
+} );
+
 </script>
 @endsection

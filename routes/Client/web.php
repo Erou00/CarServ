@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Client\CarController;
+use App\Http\Controllers\Client\ClientDemandeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,17 +22,18 @@ Route::group([
 
     'middleware' => ['auth','client'],
 
-    'name' => 'dashboard.'
-
-
 ], function ($router) {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+
 
     Route::resource('cars',CarController::class);
 
+    Route::controller(ClientDemandeController::class)->prefix('demandes')->name('demandes.')->group(function () {
+        Route::get('/', 'clientDemandes')->name('clientDemandes');
+        Route::get('/create', 'createDemande')->name('createtDemandes');
+        Route::post('/store', 'storeDemandes')->name('storeDemandes');
+        Route::post('/orders', 'store');
+    });
+
 
 });
-Route::post('/models',[CarController::class, 'models'])->name('getModel');
 Auth::routes();

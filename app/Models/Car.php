@@ -15,6 +15,7 @@ class Car extends Model
         'year',
         'carbirant_id',
         'kilometres',
+        'title',
         'fiscal_power',
         'gearbox',
         'doors',
@@ -23,7 +24,13 @@ class Car extends Model
         'for_sale',
         'carte_grise_front',
         'carte_grise_back',
+        'description',
+        'image',
+        'price',
         'user_id',
+        'admin_id',
+        'mechanic_id',
+        'slug'
 
     ];
 
@@ -62,6 +69,12 @@ class Car extends Model
     {
         # code..
         return $this->belongsTo(kilometer::class);
+    }
+
+    public function demandes()
+    {
+        # code...
+        return $this->hasMany(Demande::class);
     }
 
 }

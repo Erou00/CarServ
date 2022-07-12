@@ -15,6 +15,8 @@ class Service extends Model
         'image',
         'name',
         'home_service',
+        'price',
+        'description'
 
     ];
 
@@ -32,6 +34,12 @@ class Service extends Model
     {
         # code...
         return asset('uploads/services_images/'.$this->image);
+    }
+
+    public function demandes()
+    {
+        # code...
+        return $this->belongsToMany(Demande::class);
     }
 }
 

@@ -20,7 +20,7 @@
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="{{url('/')}}">Car service</a></li>
                     <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Servicess</li>
+                    <li class="breadcrumb-item active">Services</li>
                 </ol>
             </div>
             <h4 class="page-title">Services</h4>
@@ -65,6 +65,7 @@
                         <tr>
                             <th></th>
                             <th>Name</th>
+                            <th>Price</th>
                             <th>Home service</th>
                             <th>Action</th>
 
@@ -87,6 +88,10 @@
                         </td>
 
                         <td>
+                            {{$service->price}}
+                         </td>
+
+                        <td>
                             @if (($service->home_service))
                             <h3><span class="badge bg-success ">Yes</span></h3>
                             @else
@@ -97,7 +102,7 @@
                         <td>
                             <a href="javascript:void(0);" class="action-icon"
                             data-bs-toggle="modal" data-bs-target="#updateservice-modal{{$service->id}}"> <i class="mdi mdi-square-edit-outline"></i></a>
-                            <form action="{{ route('services.destroy', $service->id) }}" method="POST"
+                            <form action="{{ route('dashboard.services.destroy', $service->id) }}" method="POST"
                                 style="display: inline-block">
                                @csrf
                                @method('DELETE')
@@ -119,7 +124,7 @@
                                             </a>
                                         </div>
 
-                                        <form class="ps-3 pe-3" action="{{route('services.update',$service->id)}}" method="POST" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
+                                        <form class="ps-3 pe-3" action="{{route('dashboard.services.update',$service->id)}}" method="POST" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
                                         data-upload-preview-template="#uploadPreviewTemplate" enctype="multipart/form-data">
 
                                         @csrf
@@ -135,8 +140,26 @@
                                             </div>
 
                                             <div class="mb-3">
+                                                <label for="price" class="form-label">Price :</label>
+                                                <input class="form-control" type="number" id="price" name="price" required value="{{$service->price}}">
+                                            </div>
+
+                                            <div class="mb-3">
                                                 <img src="{{ $service->image_path}}" alt="{{$service->name}}" title="contact-img" class="rounded me-3" height="180" width="460">
 
+
+                                            </div>
+
+
+                                            <div class="row mb-3">
+                                                <div class="form-group mt-3">
+                                                    <label>description</label>
+                                                    <textarea name="description" class="form-control ckeditor @error('description') is-invalid @enderror">
+                                                        {{ $service->description}}
+                                                    </textarea>
+
+
+                                                </div>
 
                                             </div>
 
@@ -193,7 +216,7 @@
                     </a>
                 </div>
 
-                <form class="ps-3 pe-3" action="{{route('services.store')}}" method="POST" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
+                <form class="ps-3 pe-3" action="{{route('dashboard.services.store')}}" method="POST" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
                 data-upload-preview-template="#uploadPreviewTemplate" enctype="multipart/form-data">
 
                 @csrf
@@ -205,6 +228,22 @@
                     <div class="mb-3">
                         <label for="image" class="form-label">Image :</label>
                         <input class="form-control" type="file" id="image" name="image" required>
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="image" class="form-label">Price :</label>
+                        <input class="form-control" type="number"  name="price" required>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="form-group ">
+                            <label>description</label>
+                            <textarea name="description" class="form-control ckeditor1">
+
+                            </textarea>
+
+                        </div>
+
                     </div>
 
                     <div class="row mb-3">
@@ -220,6 +259,7 @@
                         </div>
 
                     </div>
+
 
 
                     <div class="my-3 text-center">
@@ -254,5 +294,20 @@
      <!-- demo app -->
      <script src="{{asset('assets/js/pages/demo.datatable-init.js')}}"></script>
 
+{{-- CKEditor CDN --}}
+<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 
+<script>
+
+            ClassicEditor
+.create( document.querySelector( '.ckeditor' ) )
+.catch( error => {
+console.error( error );
+} );
+ClassicEditor
+.create( document.querySelector( '.ckeditor1' ) )
+.catch( error => {
+console.error( error );
+} );
+</script>
 @endsection

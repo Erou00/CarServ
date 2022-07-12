@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CarbirantTable::class);
         $this->call(OriginTable::class);
         $this->call(KilometerSeeder::class);
+        Product::factory(25)->create();
 
     }
 }

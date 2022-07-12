@@ -5,8 +5,15 @@
  */
 
 require('./bootstrap');
+import JwPagination from 'jw-vue-pagination';
+
 
 window.Vue = require('vue').default;
+import Vue from "vue";
+import vueToastr from "vue-toastr";
+
+Vue.use(vueToastr);
+/**
 
 /**
  * The following block of code may be used to automatically register your
@@ -18,8 +25,12 @@ window.Vue = require('vue').default;
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
+Vue.component('jw-pagination', JwPagination);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('all-client-demandes', require('./components/clients/allClientDemandes').default);
+Vue.component('add-to-cart', require('./components/products/addToCart').default);
+Vue.component('cart', require('./components/products/Cart').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,6 +38,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
+ const app = new Vue({
     el: '#app',
 });

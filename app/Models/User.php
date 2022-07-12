@@ -101,4 +101,11 @@ class User extends Authenticatable
         return $this->hasMany(Car::class);
     }
 
+    public function demandes()
+    {
+        # code..
+        return $this->hasMany(Demande::class);
+    }
+
+
 }

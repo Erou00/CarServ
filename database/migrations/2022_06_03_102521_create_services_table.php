@@ -15,6 +15,8 @@ class CreateServicesTable extends Migration {
 			$table->string('name', 255);
 			$table->boolean('home_service');
             $table->string('image');
+            $table->integer('price');
+            $table->text('description');
 
 		});
 	}

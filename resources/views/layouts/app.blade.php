@@ -15,7 +15,6 @@
       <!-- Customized Bootstrap Stylesheet -->
       <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- Scripts -->
-    <script src="{{asset('js/app.js')}}"></script>
 
 
     <!-- Google Web Fonts -->
@@ -46,7 +45,7 @@
 
 <body>
 
-    <div id="id">
+    <div id="app">
 
          <!-- Spinner Start -->
  <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -98,11 +97,12 @@
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <a href="{{url('/')}}" class="nav-item nav-link active">Home</a>
             <a href="about.html" class="nav-item nav-link">About</a>
-            <a href="service.html" class="nav-item nav-link">Cars for Sale</a>
+            <a href="{{route('carForSale')}}" class="nav-item nav-link">Cars for Sale</a>
 
             <a href="service.html" class="nav-item nav-link">Our Services</a>
-            <a href="service.html" class="nav-item nav-link">Our Products</a>
+            <a href="{{route('products')}}" class="nav-item nav-link">Our Products</a>
             <a href="contact.html" class="nav-item nav-link">Contact</a>
+            <cart/>
         </div>
         @guest
         @if (Route::has('login'))
@@ -141,7 +141,12 @@
 <!-- Navbar End -->
 
 
-        @yield('content')
+
+
+
+         @yield('content')
+
+
     </div>
 
 <!-- Footer Start -->
@@ -229,6 +234,7 @@
 
 <!-- Template Javascript -->
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/app.js')}}" ></script>
 
 @yield('scripts')
 </body>

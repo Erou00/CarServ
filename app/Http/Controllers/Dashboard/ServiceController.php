@@ -50,6 +50,7 @@ class ServiceController extends Controller
         $request->validate([
             'image'=>['image','required'],
             'name' => ['required','unique:services'],
+            'price' => ['required']
 
         ]);
 
@@ -62,10 +63,12 @@ class ServiceController extends Controller
         Service::create([
             'image' => $request->image->hashName(),
             'name'  => $request->name,
+            'price' => $request->price,
+            'description'=> $request->description,
             'home_service' => ($request->home_service)  ? true : false
         ]);
 
-        return redirect()->route('services.index');
+        return redirect()->route('dashboard.services.index');
 
     }
 
@@ -105,11 +108,12 @@ class ServiceController extends Controller
 
         $request->validate([
             'image'=>'image',
+            'price' => ['required'],
             'name' => [
                 'required',
                  Rule::unique('services')->ignore($service->id),
                 ],
-
+            'description' => 'required'
         ]);
 
         if($request->image){
@@ -126,12 +130,14 @@ class ServiceController extends Controller
 
 
 
+
         $service->name  = $request->name;
         $service->home_service = ($request->home_service)  ? true : false;
-
+        $service->price  = $request->price;
+        $service->description  = $request->description;
         $service->update();
 
-        return redirect()->route('services.index');
+        return redirect()->route('dashboard.services.index');
     }
 
     /**
@@ -146,6 +152,6 @@ class ServiceController extends Controller
         Storage::disk('public_uploads')->delete('services_images/'.$service->image);
 
         $service->delete();
-        return redirect()->route('services.index');
+        return redirect()->route('dashboard.services.index');
     }
 }

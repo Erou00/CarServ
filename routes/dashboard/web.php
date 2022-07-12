@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AdminDemandeController;
+use App\Http\Controllers\Dashboard\CarController;
 use App\Http\Controllers\Dashboard\ClientController;
+use App\Http\Controllers\Dashboard\MechanicController;
+use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ServiceController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,20 +22,30 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::group([
-
-    'middleware' => ['auth','admin'],
-    'prefix' => 'dashboard',
-    'name' => 'dashboard.'
-
-
-], function ($router) {
+Route::prefix('dashboard')->middleware(['auth','admin'])->name('dashboard.')->group(function ($router) {
     Route::get('/', function () {
         return view('dashboard.index');
     });
 
+
+
+    Route::controller(AdminDemandeController::class)->prefix('demandes')->group(function () {
+        Route::get('/orders/{id}', 'show');
+        Route::post('/orders', 'store');
+    });
+
     Route::resource('clients',ClientController::class);
     Route::resource('services',ServiceController::class);
+    Route::controller(CarController::class)->group(function () {
+
+        Route::get('for_sale','carForSale')->name('carForSale');
+        Route::resource('cars',CarController::class);
+
+    });
+
+
+    Route::resource('products',ProductController::class);
+    Route::resource('mechanics',MechanicController::class);
     Route::resource('demandes',ServiceController::class);
 
 });
