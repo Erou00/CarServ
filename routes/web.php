@@ -28,6 +28,10 @@ Route::get('/products',[HomeController::class,'products'])->name('products');
 Route::get('/products/{slug}',[HomeController::class,'productDetails'])->name('productDetails');
 
 Route::post('/cart',[CartController::class,'store'])->name('cart');
+Route::get('/cart',[CartController::class,'index'])->name('cart');
+Route::get('/checkout/get/items',[CartController::class,'getItemsFromCart']);
+Route::post('/place-order',[CartController::class,'placeOrder']);
+
 
 
 Route::resource('users',UserController::class);

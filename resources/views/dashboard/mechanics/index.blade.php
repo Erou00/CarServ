@@ -82,13 +82,13 @@
                             <td>{{$mecanicien->email}}</td>
                             <td>{{$mecanicien->adress}}</td>
                             <td>{{$mecanicien->phone_number}}</td>
-                            <td style="text-align: center;"><a href="#">5</a></td>
+                            <td style="text-align: center;"><a href="{{route('dashboard.mechanics.show',$mecanicien->id)}}}}">{{$mecanicien->MAdemandes()->count()}}</a></td>
 
                             <td>
 
                                 <a href="{{route('dashboard.mechanics.edit',$mecanicien->id)}}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
 
-                                <a href="{{route('dashboard.mechanics.show',$mecanicien)}}" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                <a href="{{route('dashboard.mechanics.show',$mecanicien->id)}}" class="action-icon"> <i class="mdi mdi-eye"></i></a>
                                 <form action="{{ route('dashboard.mechanics.destroy', $mecanicien->id) }}" method="POST"
                                      style="display: inline-block" onsubmit="return confirm('Are You Sure?')">
                                     @csrf

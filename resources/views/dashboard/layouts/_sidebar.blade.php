@@ -53,14 +53,15 @@
                 </a>
                 <div class="collapse" id="sidebarEcommerce">
                     <ul class="side-nav-second-level">
+
                         <li>
-                            <a href="">All Demandes</a>
+                            <a href="{{route('dashboard.new.demandes.index')}}">New Demandes</a>
                         </li>
                         <li>
-                            <a href="">New Demandes</a>
+                            <a href="{{route('dashboard.all.demandes')}}">All Demandes</a>
                         </li>
                         <li>
-                            <a href="">Historique</a>
+
                         </li>
 
                     </ul>
@@ -81,15 +82,7 @@
                         <li>
                             <a href="{{route('dashboard.carForSale')}}">Cars for sell</a>
                         </li>
-                        <li>
-                            <a href="">Marks</a>
-                        </li>
-                        <li>
-                            <a href="">Models</a>
-                        </li>
-                        <li>
-                            <a href="">Carbirant</a>
-                        </li>
+
 
                     </ul>
                 </div>
@@ -108,7 +101,7 @@
 
 
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                <a href="{{route('dashboard.order.index')}}" class="side-nav-link">
                     <i class="uil uil-bill"></i>
                     <span> Orders </span>
                 </a>
@@ -120,19 +113,13 @@
             <li class="side-nav-item">
                 <a  href="{{route('dashboard.mechanics.index')}}"  aria-controls="sidebarDashboards" class="side-nav-link">
                     <i class="dripicons-gear "></i>
-                    <span> mechanic </span>
+                    <span> Mechanics </span>
                 </a>
 
             </li>
 
 
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
-                    <i class="uil uil-tag-alt"></i>
-                    <span> Stock </span>
-                </a>
 
-            </li>
 
 
 

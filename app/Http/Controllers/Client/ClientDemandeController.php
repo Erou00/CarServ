@@ -75,4 +75,18 @@ class ClientDemandeController extends Controller
             return redirect()->route('demandes.clientDemandes');
 
     }
+
+    public function InProgress()
+    {
+        # code...
+        $demandes = Demande::where('user_id',Auth::user()->id)
+        ->Where('etat','In progress')
+        ->orderBy('date', 'DESC')->get();
+
+
+        //dd($vidanges);
+
+        return view('client.demandes.InProgress')->with('demandes',$demandes);
+
+    }
 }

@@ -107,5 +107,32 @@ class User extends Authenticatable
         return $this->hasMany(Demande::class);
     }
 
+    public function Mdemandes()
+    {
+        # code..
+        return Demande::where('mechanic_id',$this->id)->get();
+    }
+
+    public function MAdemandes()
+    {
+        # code..
+        return Demande::where('mechanic_id',$this->id)->where('etat','Affected')->get();
+    }
+
+    public function MACdemandes()
+    {
+        # code..
+        return Demande::where('mechanic_id',$this->id)->where('etat','Completed')->get();
+    }
+
+    public function messages()
+    {
+        # code..
+        return $this->hasMany(Message::class);
+    }
+
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
 
 }

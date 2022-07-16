@@ -243,9 +243,13 @@ class CarController extends Controller
             $request_data = [];
 
             if ($request->hasFile('images')) {
-                foreach ( json_decode($car->images) as $image) {
-                Storage::disk('public_uploads')->delete('cars_images/'.$image);
+                if ($car->images) {
+                    # code...
+                      foreach ( json_decode($car->images) as $image) {
+                    Storage::disk('public_uploads')->delete('cars_images/'.$image);
                 }
+                }
+
 
                 foreach ($request->images as $image) {
                     # code...

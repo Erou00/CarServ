@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Demande;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -97,11 +98,26 @@ class MechanicController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         //
+        $mechanic = User::find($id);
+        //dd($date);
 
 
+
+        $demandes = Demande::with('mechanic')
+        ->with('car',function($query)
+        {
+            # code...
+            $query->with('marque')->with('model');
+        })
+        ->with('services')
+        ->where('mechanic_id',$mechanic->id)->orderByDesc('date')->get();
+
+
+        // dd($demandes);
+        return view('dashboard.mechanics.details')->with(["demandes"=>$demandes,'mechanic'=>$mechanic]);
 
     }
 

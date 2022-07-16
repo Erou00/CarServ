@@ -11,6 +11,8 @@
         <link rel="shortcut icon" href="assets/images/favicon.ico">
 
         <!-- third party css -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
         <link href="{{asset('assets/css/vendor/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css">
         <!-- third party css end -->
 
@@ -24,7 +26,7 @@
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
         <!-- Begin page -->
-        <div class="wrapper">
+        <div class="wrapper"  >
             <!-- ========== Left Sidebar Start ========== -->
              @include('dashboard.layouts._sidebar')
             <!-- Left Sidebar End -->
@@ -34,7 +36,7 @@
             <!-- ============================================================== -->
 
             <div class="content-page">
-                <div class="content">
+                <div class="content" id="dashboard">
                     <!-- Topbar Start -->
 
                         @include('dashboard.layouts._topbar')
@@ -101,8 +103,11 @@
         <!-- end demo js-->
 
             <!-- bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
+        <script src="{{asset('js/app.js')}}"></script>
 
            @yield('scripts')
+
     </body>
 </html>

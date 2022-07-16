@@ -12,30 +12,30 @@
     </div>
       <div class="col-2">
         <label class="rad-label px-0">
-            <input type="radio" class="rad-input" name="rad" @change="onChange($event)" value="En cours" v-model="etat1">
+            <input type="radio" class="rad-input" name="rad" @change="onChange($event)" value="In progress" v-model="etat1">
             <div class="rad-design"></div>
-            <div class="rad-text">En cours</div>
+            <div class="rad-text">In progress</div>
         </label>
     </div>
     <div class="col-2">
         <label class="rad-label">
-            <input type="radio" class="rad-input"  name="rad" @change="onChange($event)"  value="Validée" v-model="etat1">
+            <input type="radio" class="rad-input"  name="rad" @change="onChange($event)"  value="Validated" v-model="etat1">
             <div class="rad-design"></div>
-            <div class="rad-text">Validée</div>
+            <div class="rad-text">Validated</div>
         </label>
     </div>
     <div class="col-2">
         <label class="rad-label">
-            <input type="radio" class="rad-input" name="rad" @change="onChange($event)" value="Achevée" v-model="etat1">
+            <input type="radio" class="rad-input" name="rad" @change="onChange($event)" value="Completed" v-model="etat1">
             <div class="rad-design"></div>
-            <div class="rad-text">Achevée</div>
+            <div class="rad-text">Completed</div>
         </label>
     </div>
      <div class="col-2">
         <label class="rad-label">
-            <input type="radio" class="rad-input" @change="onChange($event)"  name="rad" value="Refusée" v-model="etat1">
+            <input type="radio" class="rad-input" @change="onChange($event)"  name="rad" value="Refused" v-model="etat1">
             <div class="rad-design"></div>
-            <div class="rad-text">Refusée</div>
+            <div class="rad-text">Refused</div>
         </label>
     </div>
   <div class="col-2">
@@ -79,8 +79,8 @@
 
                         </h3>
 
-                            <p class="badge " :class="{'badge-danger': demande.etat == 'Refusée','badge-dark': demande.etat == 'Achevée' ,'badge-primary': demande.etat == 'Nouvelle' || demande.etat == 'En cours','badge-success': demande.etat == 'PEC' || demande.etat == 'Affectée'}">
-                               {{(demande.etat == "En cours" || demande.etat == "Nouvelle" )  ? "En cours":((demande.etat == "PEC" || demande.etat == "Affectée") ? "Validée" : ((demande.etat == "Achevée" || demande.etat == "Refusée") ? demande.etat : '')  )}}
+                            <p class="badge " :class="{'bg-danger': demande.etat == 'Refused','bg-dark': demande.etat == 'Completed' ,'bg-primary': demande.etat == 'In progress','bg-success': demande.etat == 'Handling' || demande.etat == 'Affected'}">
+                               {{(demande.etat == "In progress" )  ? "In progress":((demande.etat == "Handling" || demande.etat == "Affected") ? "Validated" : ((demande.etat == "Completed" || demande.etat == "Refused") ? demande.etat : '')  )}}
                             </p>
 
                         <p class="v-info"><i class="fa fa-calendar" aria-hidden="true"></i> {{demande.date | formatDate}}<i class="fas fa-clock mx-1"></i>{{ demande.date | formatDateHour}}</p>
@@ -89,25 +89,25 @@
                    <div>
 
                     <div class="img-area">
-                        <img :src="'http://127.0.0.1:8000/uploads/cars_logo/'+demande.car.marque.logo" alt="" srcset="" width="250" height="140">
+                        <img :src="'/uploads/cars_logo/'+demande.car.marque.logo" alt="" srcset="" width="250" height="140">
 
                     </div>
-                    <!-- <h5 class="text-center"><strong>Montant :{{' '+demande.products.reduce((acc, item) => acc + item.price, 0)}}Dh</strong></h5> -->
+                     <h5 class="text-center"><strong>Amount :{{' '+demande.services.reduce((acc, item) => acc + item.price, 0)}}Dh</strong></h5> -->
                 </div>
                 </div>
                 <div class="box-end ">
 
                         <label class="m-0" style="font-size: 15px; font-weight: 900;color: #fff" >
-                            Type :
+                            Services :
                         </label><br>
 
-                            <!-- <div v-for="(vt,index) in demande.products" :key="index" style="">
+                            <div v-for="(vt,index) in demande.services" :key="index" style="">
                             <label style="color: #fff ">
                             <i class="fa fa-check mr-1" aria-hidden="true" style="color: #00a65a"></i>
-                            <Strong>{{vt.type.name}}</Strong>
+                            <Strong>{{vt.name}}</Strong>
                             </label>
                             <br>
-                            </div> -->
+                            </div>
 
 
 
@@ -227,15 +227,15 @@ export default ({
               if (data =="") {
                  this.needle = [""]
               }
-              else if (data =="En cours") {
-                 this.needle = ["Nouvelle","En cours"]
+              else if (data =="In progress") {
+                 this.needle = ["In progress"]
               }
-              else if (data =="Validée") {
-                 this.needle = ["Affectée","PEC"]
-              }else if(data =="Achevée"){
-                  this.needle = ["Achevée"]
-              }else if(data =="Refusée"){
-                  this.needle = ["Refusée"]
+              else if (data =="Validated") {
+                 this.needle = ["Affected","Handling"]
+              }else if(data =="Completed"){
+                  this.needle = ["Completed"]
+              }else if(data =="Refused"){
+                  this.needle = ["Refused"]
               }
 
 
@@ -326,7 +326,7 @@ color: white;
 .rad-text {
   color: hsl(0, 0%, 0%);
   margin-left: 14px;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 18px;
   font-weight: 900;

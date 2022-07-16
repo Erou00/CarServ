@@ -77,4 +77,10 @@ class Car extends Model
         return $this->hasMany(Demande::class);
     }
 
+    public function messages()
+    {
+        # code...
+        return $this->hasMany(Message::class);
+    }
+
 }

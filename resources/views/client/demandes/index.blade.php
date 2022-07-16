@@ -63,8 +63,8 @@
 .box  .box-head h5{
     background-color: black;
     color: white;
-    padding: 1px 10px;
-
+    padding: 1px 2px;
+    font-size: 18px;
     margin-top: 12px;
     border-radius: 5px;
 
@@ -96,7 +96,7 @@
         <div class="row">
 
             <div class="">
-                <a href="{{route('demandes.createtDemandes')}}" class="btn btn-primary py-3 px-5 mb-4" style="float: right;"><i class="fa fa-plus ms-3 mx-2"></i>New Demande</a>
+                <a href="{{route('demandes.createtDemandes')}}" class="btn btn-primary py-3 px-5 mb-5" style=""><i class="fa fa-plus ms-3 mx-2"></i>New Demande</a>
             </div>
 
 

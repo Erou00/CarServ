@@ -1,5 +1,5 @@
 <template>
-     <a class="nav-item nav-link" href="cart.html">
+     <a class="nav-item nav-link" href="/cart">
                 <i class="fa fa-shopping-cart"></i> Cart
                 <span class="">({{itemCount}})</span>
       </a>

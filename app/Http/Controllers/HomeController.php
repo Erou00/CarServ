@@ -51,6 +51,7 @@ class HomeController extends Controller
                      ->when($request->maxPrice, function($q)use ($request){
                         return $q->where('price','<=' , $request->maxPrice);
                      })
+                     ->where('for_sale',true)
                     ->paginate(6);
 
          return view('carForSale',[

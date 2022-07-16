@@ -114,7 +114,7 @@
                             </div>
 
 
-                            <div class="mb-3 row">
+                            <div class="mb-3 row sale">
                                 <label for="title" class="col-md-3 col-form-label">Annonce Title</label>
                             <div class="col-md-9">
 
@@ -232,7 +232,7 @@
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-md-3 col-form-label">Carte grise</label>
                             <div class="col-md-9">
-                                <input type="file" class="form-select form-control" name="carte_grise_front" multiple {{ (isset($vehicule) ? "":"required")}}>
+                                <input type="file" class="form-select form-control" name="carte_grise_front" {{ (isset($vehicule) ? "":"required")}}>
                                 @error('carte_grise_front')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -244,7 +244,7 @@
                              <div class="mb-3 row">
                              <label for="staticEmail" class="col-md-3 col-form-label">Carte grise</label>
                              <div class="col-md-9">
-                             <input type="file" class="form-select form-control" name="carte_grise_back" multiple {{ (isset($vehicule) ? "":"required")}}>
+                             <input type="file" class="form-select form-control" name="carte_grise_back" {{ (isset($vehicule) ? "":"required")}}>
                              @error('carte_grise_back')
                              <span class="invalid-feedback" role="alert">
                                  <strong>{{ $message }}</strong>

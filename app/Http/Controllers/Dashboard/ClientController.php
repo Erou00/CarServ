@@ -103,4 +103,13 @@ class ClientController extends Controller
 
         return redirect()->route('dashboard.clients.index');
     }
+
+    public function AllClients()
+    {
+        # code...
+        $roles = Role::where('name','=','client')->first();
+
+        return  $roles->users()->get();
+
+    }
 }

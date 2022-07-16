@@ -5,14 +5,27 @@
  */
 
 require('./bootstrap');
-import JwPagination from 'jw-vue-pagination';
-
-
 window.Vue = require('vue').default;
+
+import JwPagination from 'jw-vue-pagination';
+import Lodash from 'lodash';
+import moment from 'moment';
+import VueTableDynamic from 'vue-table-dynamic';
+import VueConfirmDialog from 'vue-confirm-dialog'
+import jQuery from 'jQuery'
+window.jQuery = jQuery
+
 import Vue from "vue";
 import vueToastr from "vue-toastr";
-
+Vue.use(Lodash)
+Vue.use(moment)
+Vue.use(VueTableDynamic)
+Vue.use(VueConfirmDialog)
+Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 Vue.use(vueToastr);
+
+window.moment = require('moment');
+window.moment.locale('ru');
 /**
 
 /**
@@ -25,12 +38,20 @@ Vue.use(vueToastr);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
 Vue.component('jw-pagination', JwPagination);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('all-client-demandes', require('./components/clients/allClientDemandes').default);
+Vue.component('messages', require('./components/clients/Messages').default);
+
 Vue.component('add-to-cart', require('./components/products/addToCart').default);
 Vue.component('cart', require('./components/products/Cart').default);
+Vue.component('checkout', require('./components/products/Checkout').default);
 
+//Adminstration
+Vue.component('demandes', require('./components/dashboard/Demandes.vue').default);
+Vue.component('all-demandes', require('./components/dashboard/AllDemandes.vue').default);
+Vue.component('mechanic-demandes', require('./components/dashboard/MechanicDemandes.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -41,3 +62,8 @@ Vue.component('cart', require('./components/products/Cart').default);
  const app = new Vue({
     el: '#app',
 });
+
+const app1 = new Vue({
+    el: '#dashboard',
+});
+

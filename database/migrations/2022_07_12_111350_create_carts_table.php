@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
+            $table->text('product');
             $table->integer('product_id')->references('id')->on('products');
-
             $table->integer('quantity');
             $table->float('price');
-
             $table->integer('user_id')->references('id')->on('users');
 
 

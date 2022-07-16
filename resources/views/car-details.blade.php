@@ -188,8 +188,12 @@ color: #999;
 
                                     <!-- Split button -->
 
-                                        <a href="" class="btn btn-primary mt-3">
-                                            Send Message</a>
+                                        @if (Auth::id != $car->user_id)
+                                           <a href="{{route('chat.chatPage')}}" class="btn btn-primary mt-3">
+                                            Send Message
+                                            </a>
+                                        @endif
+
 
 
                                 </div>

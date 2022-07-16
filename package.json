@@ -26,7 +26,13 @@
     },
     "dependencies": {
         "autoprefixer": "10.4.5",
+        "jquery": "^3.6.0",
         "jw-vue-pagination": "^1.0.3",
+        "laravel-vue-pagination": "^3.0.0",
+        "moment": "^2.29.4",
+        "vue-confirm-dialog": "^1.0.2",
+        "vue-echo-laravel": "^1.0.0",
+        "vue-table-dynamic": "^0.4.10",
         "vue-toastr": "^2.1.2"
     }
 }

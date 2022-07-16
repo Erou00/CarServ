@@ -32,7 +32,7 @@ return new class extends Migration
             $table->text('images')->nullable();
             $table->text('description')->nullable();
             $table->integer('price')->nullable();
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
             $table->integer('user_id')->references('id')->on('users');
             $table->timestamps();
         });
