@@ -127,6 +127,10 @@
 
 
             @foreach ($cars as $car)
+            @auth
+
+            @endauth
+
                 <div class="col-md-4 item-block">
 
                 <div class="fh5co-property">
@@ -185,6 +189,7 @@
                 </div>
 
             </div>
+
             @endforeach
 
 

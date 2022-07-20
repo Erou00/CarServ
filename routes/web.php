@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('services', function () {
+    return view('services');
+});
+
 Route::post('/models',[HomeController::class, 'models'])->name('getModel');
 
 Route::get('/car-for-sale',[HomeController::class,'carForSale'])->name('carForSale');
@@ -31,6 +36,9 @@ Route::post('/cart',[CartController::class,'store'])->name('cart');
 Route::get('/cart',[CartController::class,'index'])->name('cart');
 Route::get('/checkout/get/items',[CartController::class,'getItemsFromCart']);
 Route::post('/place-order',[CartController::class,'placeOrder']);
+
+
+Route::get('services-details/{id}',[HomeController::class,'serviceDetails'])->name('serviceDetails');
 
 
 

@@ -449,7 +449,7 @@ textarea.form-control {
                             <div class="main-box clearfix">
                                 <h2><span>demande</span></h2>
                                 {{-- {{dd($demande)}} --}}
-                                <mechanic-demandes :demandes="{{$demandes}}"></mechanic-demandes>
+                                <admin-mechanic-demandes :demandes="{{$demandes}}"></admin-mechanic-demandes>
                             </div>
 
 

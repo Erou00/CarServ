@@ -84,10 +84,10 @@
 }
 
 .navbar-light .navbar-nav .nav-link {
-    margin-right: 20px;
+    margin-right: 14px;
     padding: 25px 0;
     color: #FFFFFF;
-    font-size: 15px;
+    font-size: 12px;
     text-transform: uppercase;
     outline: none;
 }

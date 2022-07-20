@@ -6,12 +6,14 @@
             <div id="plist" class="people-list">
                 <div class="input-group">
 
-                    <input type="text" class="form-control" placeholder="Search...">
+                    <input type="text" class="form-control" v-model="search" placeholder="Search...">
                 </div>
                 <ul class="list-unstyled chat-list mt-2 mb-0">
 
                     <li class="clearfix" v-for="car in filteredList" :key="car.id"
-                    @click="activeCar=car" >
+                    @click="activeCar=car; activeCarId = car.id"
+                    :class="{'active': car.id == activeCarId}" >
+
                         <img :src="'/uploads/cars_logo/'+car.marque.logo" alt="avatar">
                         <div class="about">
                             <div class="name">{{car.title}}</div>
@@ -36,8 +38,7 @@
             <div class="message-feed" v-for="(message , index) in allMessages"  :key="index"
               :class="{'right': user.id != message.from_user_id,'left':user.id == message.from_user_id }">
                 <div class="msg-body">
-                    <img  src=""
-                    alt="User name" width="60" height="60">
+
                     <div class="mf-content">
                         {{message.message}}
                     </div>
@@ -69,12 +70,15 @@ export default {
  props : ['Cars','User'],
 data() {
     return {
+
         allMessages : [],
         cars : this.Cars,
         activeCar : null,
+        activeCarId : null,
         user : this.User,
         message:null,
-        to_user:null
+        to_user:null,
+        search : ''
 
     }
 },
@@ -82,7 +86,7 @@ data() {
 computed: {
 
         filteredList() {
-        return this.cars.filter(client => {
+        return this.cars.filter(car => {
             return car.title.toLowerCase().includes(this.search.toLowerCase())
         })
         }

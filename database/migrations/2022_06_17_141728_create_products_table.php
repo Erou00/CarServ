@@ -23,6 +23,7 @@ return new class extends Migration
             $table->double('sale_price',8,2);
             $table->integer('stock');
             $table->text('images');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,18 +18,26 @@ class ChatController extends Controller
 {
     //
 
-    public function chatPage($id = null)
+    public function chatPage(Request $request)
     {
         # code...
-
-        $cars = Car::whereHas('messages' ,function($q) {
+        $id = $request->car_id;
+        //dd($id);
+        $cars = null;
+        $cars =  Car::whereHas('messages' ,function($q) {
             $q->where('from_user_id', Auth()->user()->id)
               ->orWhere('to_user_id', Auth()->user()->id);
 
-       })->with('user')->with('marque')->with('model')->with('messages')->get();
+       })
+        ->with('user')->with('marque')->with('model')->with('messages')->get();
 
 
-       if (isEmpty($cars)) {
+        $collection = $cars->map(function ($car) {
+            return $car->id;
+        });
+
+
+       if ($cars->count() == 0 || !$collection->contains($id) ) {
         # code...
            if ($id != null) {
             # code...
@@ -40,6 +48,13 @@ class ChatController extends Controller
                 'message' => 'Hi im '.Auth()->user()->first_name.' '.Auth()->user()->last_name,
                 'car_id'=>  $car->id
              ]);
+
+             $cars = Car::whereHas('messages' ,function($q) {
+                $q->where('from_user_id', Auth()->user()->id)
+                  ->orWhere('to_user_id', Auth()->user()->id);
+
+              })->with('user')->with('marque')->with('model')->with('messages')->get();
+
            }
        }
 

@@ -11,7 +11,22 @@
 
 @section('content')
 
-
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{{url('/')}}">Car service</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Client</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Client details</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
 
 <div class="row mt-3">
     <div class="col-12">
@@ -28,14 +43,18 @@
 
                                 </div>
                             </div>
-                            <hr class="my-4">
+                            <hr class="my-2">
                             <ul class="list-group list-group-flush">
 
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <li class="list-group-item d-flex ">
                                     <a href="">
-                                        <h6>Cars</h6>
-                                    </a>
+                                        <h5 >Cars : {{$user->cars->count()}}
+                                        <br> <span class="mt-5"> Demandes : {{$user->demandes->count()}}</span></h5>
+                                    </a><br>
+
                                 </li>
+
+
 
                             </ul>
                         </div>

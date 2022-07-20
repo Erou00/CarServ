@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\PrivateDemande;
 use App\Http\Controllers\Controller;
 use App\Models\Demande;
 use App\Models\Role;
@@ -9,6 +10,7 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ClientDemandeController extends Controller
 {
@@ -59,7 +61,7 @@ class ClientDemandeController extends Controller
             'car_id' => $request->car_id,
             'date' =>$date->format('Y-m-d H:i:s'),
             'address' => $request->address,
-            'comment' => $request->commentaire,
+            'comment' => $request->comment,
             'user_id' => Auth::id(),
             'admin_id' => $user->id
             ]
@@ -71,6 +73,35 @@ class ClientDemandeController extends Controller
                 # code..
                 $demande->services() -> attach($service_id);
             }
+
+
+            $demandes = Demande::select('*')->where('etat','In progress')->get();
+
+            //dd($vidanges);
+
+            broadcast(new PrivateDemande($demande->load('user'),$demandes->count()))->toOthers();
+
+            $details = [
+                'id' => $demande->id,
+                'name' => $demande->user->first_name.' '.$demande->user->last_name,
+                'adress' => $demande->user->adress,
+                'marque' => $demande->car->marque->name.' '.$demande->car->model->model,
+                'date' => $demande->date,
+                'services' => $demande->services,
+                'tel' => $demande->user->phone_number,
+                'comment' => $demande->comment
+            ];
+            //dd($details['id']);
+
+            try {
+                //code...
+                Mail::to('carserv@service.com')->send(new \App\Mail\DemandeMail($details));
+            } catch (\Exception $exception) {
+                return $exception;
+
+            }
+
+            session()->flash('message','');
 
             return redirect()->route('demandes.clientDemandes');
 

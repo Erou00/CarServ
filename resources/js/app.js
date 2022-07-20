@@ -51,7 +51,13 @@ Vue.component('checkout', require('./components/products/Checkout').default);
 //Adminstration
 Vue.component('demandes', require('./components/dashboard/Demandes.vue').default);
 Vue.component('all-demandes', require('./components/dashboard/AllDemandes.vue').default);
-Vue.component('mechanic-demandes', require('./components/dashboard/MechanicDemandes.vue').default);
+Vue.component('admin-mechanic-demandes', require('./components/dashboard/AdminMechanicDemandes').default);
+Vue.component('demande-notification', require('./components/dashboard/DemandeNotification').default);
+
+
+//Mechanics
+Vue.component('mechanic-demandes', require('./components/mechanics/MechanicDemandes').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

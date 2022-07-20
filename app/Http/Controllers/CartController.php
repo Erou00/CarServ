@@ -312,6 +312,7 @@ class CartController extends Controller
                    # code...
                    Cart::where('user_id',Auth::user()->id)->delete();
 
+                   session()->flash('message','');
                    return redirect()->route('clientOrders');
                }
 
@@ -331,7 +332,23 @@ class CartController extends Controller
             return json_decode($cart->cart) ;
         });
         //dd($carts);
+        session()->flash('message','');
         return view('client.orders.index')->with('carts', $carts);
+
+    }
+
+    public function delete($id)
+    {
+        # code...
+        $cart = Cart::find($id);
+        //dd($cart);
+        $cart->delete();
+
+        return response()->json([
+            "Error" => false,
+            "cart" => 'cart deleted'
+        ]);
+
 
     }
 }

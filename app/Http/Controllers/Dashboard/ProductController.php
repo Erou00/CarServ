@@ -93,7 +93,8 @@ class ProductController extends Controller
 
        //dd($request_data);
         $product->save();
-        session()->flash('success',__('site.added_successfully'));
+        toastr()->success('Product added Successfully');
+
 
         return redirect()->route('dashboard.products.index');
     }
@@ -107,6 +108,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
+        //dd($product);
         return view('dashboard.products.product-details',['product'=>$product]);
     }
 
@@ -188,7 +190,7 @@ class ProductController extends Controller
 
 
                 $product->update();
-                session()->flash('success','updated successfully');
+                toastr()->success('Product updated Successfully');
 
                 return redirect()->route('dashboard.products.index');
     }
@@ -199,13 +201,13 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
         //
+        $product = Product::withTrashed()->where('id',$id)->first();
+        if($product->trashed()){
         if ($product->image != 'default.png') {
-
             Storage::disk('public_uploads')->delete('/products_images/' . $product->image);
-
         }
 
         if ($product->images) {
@@ -213,12 +215,33 @@ class ProductController extends Controller
             foreach ( json_decode($product->images) as $image) {
                 Storage::disk('public_uploads')->delete('products_images/'.$image);
                 }
-
+         }
+         $product->forceDelete();
+         session()->flash('success','product deleted successfully');
+        }else{
+            $product->delete();
+            session()->flash('success','product trashed successfully');
+            return redirect(route('dashboard.products.index'));
         }
 
         $product->delete();
-        session()->flash('success','site deletes successfully');
+
+
 
         return redirect()->route('dashboard.products.index');
+    }
+
+
+
+    public function trashed(){
+        $trashed = Product::onlyTrashed()->get();
+        return view('dashboard.products.outOfStock')->with('products',$trashed);
+    }
+
+    public function restore($id){
+
+        Product::withTrashed()->where('id',$id)->restore();
+        session()->flash('success','formation resotred successfully');
+            return redirect()->back();
     }
 }

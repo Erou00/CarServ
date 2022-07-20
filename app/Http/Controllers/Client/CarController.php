@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use App\Models\Carbirant;
+use App\Models\Demande;
 use App\Models\Mark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -145,6 +146,8 @@ class CarController extends Controller
 
             $car->save();
 
+            session()->flash('message','');
+
         return redirect()->route('cars.index');
     }
 
@@ -279,6 +282,7 @@ class CarController extends Controller
 
 
        $car->update();
+       session()->flash('message','');
       return redirect()->route('cars.index');
 
     }
@@ -304,7 +308,12 @@ class CarController extends Controller
             }
         }
 
+        $demande = Demande::where('car_id',$car->id);
+        $demande->delete();
         $car->delete();
+
+        session()->flash('message','');
+
         return redirect()->back();
     }
 

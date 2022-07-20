@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Car;
+use App\Models\Demande;
+use App\Models\Message;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -94,12 +97,33 @@ class ClientController extends Controller
 
         $user = User::find($id);
 
+        $car = Car::where('user_id',$user->id)->get();
+
+        if ($car->count() > 0) {
+            # code...
+            $demande = Demande::where('car_id',$car->last()->id)->get();
+
+            if ($demande->count() > 0) {
+                # code...
+                $message = Message::where('car_id',$demande->last()->id)->get();
+                $message->each->delete();
+            }
+
+            $demande->each->delete();
+            $car->each->delete();
+        }
+
+
         if ($user->image != 'default.png') {
             # code...
             Storage::disk('public_uploads')->delete('users_images/'.$user->image);
         }
+
+        $user -> roles() -> detach();
         $user->delete();
-        session()->flash('success','deleted');
+
+        toastr()->success('Client deleted Successfully');
+
 
         return redirect()->route('dashboard.clients.index');
     }

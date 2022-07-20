@@ -62,7 +62,7 @@
         <div class="col-lg-7 px-5 text-start">
             <div class="h-100 d-inline-flex align-items-center py-3 me-4">
                 <small class="fa fa-map-marker-alt text-primary me-2"></small>
-                <small>123 Street, New York, USA</small>
+                <small>Rabat, Morroco</small>
             </div>
             <div class="h-100 d-inline-flex align-items-center py-3">
                 <small class="far fa-clock text-primary me-2"></small>
@@ -72,7 +72,7 @@
         <div class="col-lg-5 px-5 text-end">
             <div class="h-100 d-inline-flex align-items-center py-3 me-4">
                 <small class="fa fa-phone-alt text-primary me-2"></small>
-                <small>+012 345 6789</small>
+                <small>+212 645 6789</small>
             </div>
             <div class="h-100 d-inline-flex align-items-center">
                 <a class="btn btn-sm-square bg-white text-primary me-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -87,7 +87,7 @@
 
 <!-- Navbar Start -->
 <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-    <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+    <a href="{{url('/')}}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
         <h2 class="m-0 text-primary"><i class="fa fa-car me-3"></i>CarServ</h2>
     </a>
     <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -95,14 +95,18 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <a href="{{url('/')}}" class="nav-item nav-link active">Home</a>
-            <a href="about.html" class="nav-item nav-link">About</a>
+            <a href="{{url('/')}}" class="nav-item nav-link">Home</a>
+            <a href="#" class="nav-item nav-link">About</a>
             <a href="{{route('carForSale')}}" class="nav-item nav-link">Cars for Sale</a>
 
-            <a href="service.html" class="nav-item nav-link">Our Services</a>
+            <a href="{{url('/services')}}" class="nav-item nav-link">Our Services</a>
             <a href="{{route('products')}}" class="nav-item nav-link">Our Products</a>
-            <a href="contact.html" class="nav-item nav-link">Contact</a>
-            <cart/>
+            <a href="#" class="nav-item nav-link">Contact</a>
+
+            @auth
+                <cart/>
+            @endauth
+
         </div>
         @guest
         @if (Route::has('login'))
@@ -121,8 +125,20 @@
             </a>
             <div class="dropdown-menu fade-up m-0">
                 <a href="{{route('home')}}" class="dropdown-item">Profil</a>
-                <a href="team.html" class="dropdown-item">Technicians</a>
-                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                @if (Auth::user()->hasRole('client'))
+                    <a href="{{route('cars.index')}}" class="dropdown-item">Cars</a>
+                    <a href="{{route('demandes.clientDemandes')}}" class="dropdown-item">Demandes</a>
+                    <a href="{{route('demandes.InProgress')}}" class="dropdown-item">Demandes in progress</a>
+                    <a href="{{route('clientOrders')}}" class="dropdown-item">Orders</a>
+
+                    <a href="{{route('chat.chatPage')}}" class="dropdown-item">Chat</a>
+                @endif
+
+                @if (Auth::user()->hasRole('mecanicien'))
+                <a href="{{route('mechanic.MechanicDemandeAffected')}}" class="dropdown-item">Demandes affected</a>
+
+                @endif
+
                 <a class="dropdown-item" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
@@ -237,5 +253,20 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 @yield('scripts')
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@if(Session::has('message'))
+
+<script>
+
+swal({
+  icon: "success",
+  button: false,
+  timer: 3000,
+});
+
+</script>
+@endif
+
 </body>
 </html>

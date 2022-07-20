@@ -46,6 +46,27 @@
             </li>
 
             <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarCars" aria-expanded="false" aria-controls="sidebarCars" class="side-nav-link">
+                    <i class="uil-car"></i>
+                    <span> Cars </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarCars">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{{route('dashboard.cars.index')}}">All Cars</a>
+                        </li>
+                        <li>
+                            <a href="{{route('dashboard.carForSale')}}">Cars for sell</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </li>
+
+
+            <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link">
                     <i class="uil-store"></i>
                     <span> Demandes </span>
@@ -68,19 +89,28 @@
                 </div>
             </li>
 
+
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarCars" aria-expanded="false" aria-controls="sidebarCars" class="side-nav-link">
-                    <i class="uil-car"></i>
-                    <span> Cars </span>
+                <a  href="{{route('dashboard.mechanics.index')}}"  aria-controls="sidebarDashboards" class="side-nav-link">
+                    <i class="dripicons-gear "></i>
+                    <span> Mechanics </span>
+                </a>
+
+            </li>
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarProducts" aria-expanded="false" aria-controls="sidebarCars" class="side-nav-link">
+                    <i class="uil uil-cart"></i>
+                    <span> Products </span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="collapse" id="sidebarCars">
+                <div class="collapse" id="sidebarProducts">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{route('dashboard.cars.index')}}">All Cars</a>
+                            <a href="{{route('dashboard.products.index')}}">Products</a>
                         </li>
                         <li>
-                            <a href="{{route('dashboard.carForSale')}}">Cars for sell</a>
+                            <a href="{{route('dashboard.products.trashed')}}">Product out of stock</a>
                         </li>
 
 
@@ -90,14 +120,6 @@
 
 
 
-
-            <li class="side-nav-item">
-                <a  href="{{route('dashboard.products.index')}}" class="side-nav-link">
-                    <i class="uil uil-cart"></i>
-                    <span> Products </span>
-                </a>
-
-            </li>
 
 
             <li class="side-nav-item">
@@ -110,13 +132,7 @@
 
 
 
-            <li class="side-nav-item">
-                <a  href="{{route('dashboard.mechanics.index')}}"  aria-controls="sidebarDashboards" class="side-nav-link">
-                    <i class="dripicons-gear "></i>
-                    <span> Mechanics </span>
-                </a>
 
-            </li>
 
 
 

@@ -60,7 +60,7 @@
         <label class="rad-label">
             <input type="radio" class="rad-input" name="rad" value="Completed" v-model="etat1">
             <div class="rad-design"></div>
-            <div class="rad-text">Acheved</div>
+            <div class="rad-text">Completed</div>
         </label>
     </div>
 
@@ -164,7 +164,7 @@
                                     " >
                                     <i class="fas fa-eye"></i></a>
 
-                                    <a :href="'/dashboard/fiche/'+demande.id" class="btn " style="font-size: 16px;
+                                    <a :href="'/dashboard/demandes/invoice/'+demande.id" class="btn " style="font-size: 16px;
                                         background-color: #D81324;
                                         height: 38px;
                                         color: #fff;

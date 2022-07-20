@@ -21,3 +21,9 @@ Broadcast::channel('privatechat.{id}', function ($user,$id) {
 
     return auth()->check();
 });
+
+Broadcast::channel('privatedemande.{id}', function ($user,$id) {
+
+    return auth()->check();
+});
+

@@ -37,7 +37,13 @@
                             </div>
                         </div>
                         <hr class="my-4">
+
                          <ul class="list-group list-group-flush">
+
+
+
+                            @if (Auth::user()->hasRole('client'))
+
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <a href="{{route('cars.index')}}">
                                     <h6>Cars</h6>
@@ -57,10 +63,34 @@
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="{{route('clientOrders')}}">
+                                    <h6>Orders</h6>
+                                </a>
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <a href="{{route('chat.chatPage')}}">
                                     <h6>Chat</h6>
                                 </a>
                             </li>
+
+
+                            @endif
+
+                            @if (Auth::user()->hasRole('mecanicien'))
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <a href="{{route('mechanic.MechanicDemandeAffected')}}">
+                                    <h6>Demandes affected</h6>
+                                </a>
+                            </li>
+                            @endif
+
+                            @if (Auth::user()->hasRole('admin'))
+
+                            @endif
+
+
 
                         </ul>
                     </div>

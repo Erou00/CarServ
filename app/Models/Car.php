@@ -30,7 +30,8 @@ class Car extends Model
         'user_id',
         'admin_id',
         'mechanic_id',
-        'slug'
+        'slug',
+        'validate'
 
     ];
 

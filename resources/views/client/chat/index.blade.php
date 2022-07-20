@@ -57,7 +57,7 @@
 }
 
 .people-list .chat-list img {
-    width: 45px;
+    width: 80px;
     border-radius: 50%
 }
 
@@ -261,11 +261,12 @@
 
 .messages-content{
 position: relative;
-  height: 460px;
+  height: 400px;
   background-color: #fff;
   padding: 15px;
-  overflow-y: scroll;
 
+  overflow-x: hidden;
+    overflow-y: scroll;
 
 }
 
@@ -293,8 +294,8 @@ position: relative;
         }
 
         .message-feed:not(.right) .mf-content {
-            background: #ffd700;
-            color: #000;
+            background: #2e6bff;
+            color: #fff;
             font-weight: bold;
             box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
             position: relative;
@@ -333,7 +334,7 @@ position: relative;
     .message-feed.left .msg-body .mf-content:before {
         left: -30px;
         top: 0px;
-        border-right-color: #ffd700;
+        border-right-color: #2e6bff;
         border-right-width: 12px;
     }
 

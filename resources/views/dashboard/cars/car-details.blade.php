@@ -47,28 +47,89 @@
                             <img src="{{asset('uploads/cars_logo/'.$car->marque->logo)}}" class="img-fluid" style="max-width: 280px;" alt="{{$car->marque->name}}">
                         </a>
 
+                        <h3>Carte grise :</h3>
+                            <hr>
                         <div class="d-lg-flex d-none mb-1">
+
+
                             <a href="javascript: void(0);">
                                 <img src="{{asset('uploads/carte_grise/'.$car->carte_grise_front)}}"
                                 class="img-fluid img-thumbnail p-2"
-                                style="width: 400px;height: 250px;" alt="{{$car->marque->name}}">
+                                style="width: 200px;height: 200px;" alt="{{$car->marque->name}}">
                             </a>
-
-
-                        </div>
-                        <div class="d-lg-flex d-none ">
 
                             <a href="javascript: void(0);" class="ms-2">
                                 <img src="{{asset('uploads/carte_grise/'.$car->carte_grise_back)}}"
-                                 class="img-fluid img-thumbnail p-2" style="width: 400px;height: 250px;" alt="{{$car->marque->name}}">
+                                 class="img-fluid img-thumbnail p-2" style="width: 200px;height: 200px;" alt="{{$car->marque->name}}">
                             </a>
 
+
                         </div>
+
+
+
+                        @if ($car->for_sale)
+
+
+
+                        <div class="row mt-3">
+                            <h3>Images :</h3>
+                            <hr>
+                            <div class="col-sd-5">
+
+
+                                <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @foreach (json_decode($car->images) as $key=>$item)
+
+                                        <div class="carousel-item {{($key == 0 ? 'active':'')}}">
+                                            <img  src="{{asset('uploads/cars_images/'.$item)}}" alt="Image" class="img-responsive"
+                                            style="width: 380px" >
+                                        </div>
+
+
+
+                                        @endforeach
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
+                                        data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
+                                        data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+
+
+
+
+
+
+                            </div>
+                    </div>
+                    @endif
+
                     </div> <!-- end col -->
                     <div class="col-lg-7">
-                        <form class="ps-lg-4">
+                        <div class="ps-lg-4">
                             <!-- car title -->
-                            <h3 class="mt-0">{{$car->marque->name.' '.$car->model->model}} </h3>
+                            <h3 class="mt-0">{{$car->marque->name.' '.$car->model->model}}
+                                @if ($car->for_sale)
+
+                                <form action="{{route('dashboard.validateCar',$car->id)}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="validate" value="{{ $car->validate == false ? 'validate' : 'non-validate' }}">
+                                    <button  class="btn btn-success">
+                                        {{ $car->validate == false ? 'Validate' : 'Refuse' }}
+                                    </button>
+                                </form>
+
+                                @endif
+
+                            </h3>
                             <p class="mb-1">Added Date: {{$car->created_at}}</p>
 
 
@@ -147,83 +208,35 @@
                                         <h6 class="font-14">For Sale:</h6>
                                         <p class="text-sm lh-150">{{($car->for_sale)? 'Yes': 'No'}}</p>
                                     </div>
+
+                                    <div class="col-md-4">
+                                        <h6 class="font-14">Demande number:</h6>
+                                        <p class="text-sm lh-150">{{$car->demandes->count()}}</p>
+                                    </div>
                                 </div>
 
 
                                 @endif
                             </div>
 
-                        </form>
+                        </div>
                     </div> <!-- end col -->
                 </div> <!-- end row-->
 
-                <div class="table-responsive mt-4">
-                    <table class="table table-bordered table-centered mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Outlets</th>
-                                <th>Price</th>
-                                <th>Stock</th>
-                                <th>Revenue</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>ASOS Ridley Outlet - NYC</td>
-                                <td>$139.58</td>
-                                <td>
-                                    <div class="progress-w-percent mb-0">
-                                        <span class="progress-value">478 </span>
-                                        <div class="progress progress-sm">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 56%;" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>$1,89,547</td>
-                            </tr>
-                            <tr>
-                                <td>Marco Outlet - SRT</td>
-                                <td>$149.99</td>
-                                <td>
-                                    <div class="progress-w-percent mb-0">
-                                        <span class="progress-value">73 </span>
-                                        <div class="progress progress-sm">
-                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 16%;" aria-valuenow="16" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>$87,245</td>
-                            </tr>
-                            <tr>
-                                <td>Chairtest Outlet - HY</td>
-                                <td>$135.87</td>
-                                <td>
-                                    <div class="progress-w-percent mb-0">
-                                        <span class="progress-value">781 </span>
-                                        <div class="progress progress-sm">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 72%;" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>$5,87,478</td>
-                            </tr>
-                            <tr>
-                                <td>Nworld Group - India</td>
-                                <td>$159.89</td>
-                                <td>
-                                    <div class="progress-w-percent mb-0">
-                                        <span class="progress-value">815 </span>
-                                        <div class="progress progress-sm">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 89%;" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>$55,781</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> <!-- end table-responsive-->
+                @if ($car->for_sale)
 
+                  <div class="container">
+
+                    <div class="row ">
+                        <div class="col-12">
+                            <h3>Description</h3>
+                            <hr>
+                            {!!  $car->description !!}
+                        </div>
+                     </div>
+                  </div>
+
+               @endif
 
 
             </div> <!-- end card-body-->

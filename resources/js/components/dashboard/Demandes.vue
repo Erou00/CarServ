@@ -80,6 +80,8 @@ export default ({
             allDemandes:[],
             showModal:false,
             lngLat:null,
+            u : this.user
+
         }
       } ,
 
@@ -109,7 +111,7 @@ export default ({
 
     mounted () {
       // Do something useful with the data in the template
-      console.log(this.allDemandes)
+      console.log(this.u.id)
     },
 
     methods: {
@@ -148,7 +150,15 @@ export default ({
         },
 
         created() {
-            this.getDemandes()
+
+                console.log(this.u.id);
+                 this.getDemandes();
+                    Echo.private('privatedemande.'+ this.u.id)
+                    .listen('PrivateDemande', (e) => {
+                    console.log(e.demande);
+                    this.allDemandes.push(e.demande);
+
+                    });
         },
 
 

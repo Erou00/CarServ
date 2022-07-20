@@ -71,10 +71,23 @@ color: #999;
                         <h2>{{ $car->fiscal_power  }} Horses - {{ $car->doors }} doors</h2>
                         <div class="text-primary" style="font-size: 4rem; font-weight: bold;">{{ $car->price }} MAD</div>
 
+                        @auth
+                        @if (Auth::user()->id != $car->user_id)
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                             Contact the owner
                         </button>
+
+                        @endif
+
+                        @else
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            Contact the owner
+                        </button>
+                        @endauth
+
+
+
 
 
 
@@ -188,13 +201,23 @@ color: #999;
 
                                     <!-- Split button -->
 
-                                        @if (Auth::id != $car->user_id)
-                                           <a href="{{route('chat.chatPage')}}" class="btn btn-primary mt-3">
-                                            Send Message
-                                            </a>
+                                    @auth
+
+
+                                        @if (Auth::user()->id != $car->user_id)
+                                            <form action="{{route('chat.chatPage')}}" method="post">
+                                             @csrf
+                                                <input type="hidden" name="car_id" value="{{$car->id}}">
+
+                                            <button class="btn btn-primary mt-3">
+                                                Send Message
+                                            </button>
+                                            </form>
                                         @endif
 
-
+                                    @else
+                                    <p>To send a message you must register</p>
+                                    @endauth
 
                                 </div>
                             </div>

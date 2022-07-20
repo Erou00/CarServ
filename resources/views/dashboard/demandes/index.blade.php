@@ -42,6 +42,8 @@
 
                 </div>
 
+                {{-- {{dd(Auth::user())}} --}}
+
                 <demandes  :user="{{Auth::user()}}"></demandes>
 
 

@@ -88,7 +88,7 @@ class MechanicController extends Controller
         $mecanicien -> roles() -> attach($role);
 
 
-
+        toastr()->success('Success Message');
         return redirect()->route('dashboard.mechanics.index');
     }
 
@@ -154,6 +154,7 @@ class MechanicController extends Controller
 
         $user->update();
 
+        toastr()->success('Mechanic updated Successfully');
         return redirect()->route('dashboard.mechanics.index');
     }
 
@@ -168,35 +169,33 @@ class MechanicController extends Controller
         //
 
          $user = User::find($id);
-        // $vidanges =  Vidange::where('mecanicien_id',$id)->get();
+            $demandes =  Demande::where('mechanic_id',$id)->get();
 
-        // if ($vidanges->count() > 0) {
-        //     # code...
-        //     foreach ($vidanges as $v) {
-        //         # code...
-        //     if ($v->etat == 'Affectée') {
+            if ($demandes->count() > 0) {
+                # code...
+                foreach ($demandes as $d) {
+                    # code...
+                if ($d->etat == 'Affected') {
 
-        //         $v->etat = 'En cours';
-        //         $v->mecanicien_id= null;
-        //         $v->update();
+                    $d->etat = 'In progress';
+                    $d->mecanicien_id= null;
+                    $d->update();
 
-        //         }
-        //     elseif($v->etat != 'Affectée'){
-        //         $v->update(['mecanicien_id'=>null]);
-        //     }
-        //     }
+                    }
+                elseif($d->etat != 'Affected'){
+                    $d->update(['mecanicien_id'=>null]);
+                }
+                }
 
 
-        // }
+            }
 
         if ($user->image != 'default.png') {
             # code...
             Storage::disk('public_uploads')->delete('users_images/'.$user->image);
         }
         $user->delete();
-        session()->flash('success','deleted');
-
-        $user->delete();
+        toastr()->success('Mechanic deleted Successfully');
         return redirect()->back();
     }
 

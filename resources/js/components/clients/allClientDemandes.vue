@@ -116,12 +116,7 @@
 
                             </div>
                             <div>
-                             <a href="" class="btn " style="font-size: 16px;
-                                        background-color: #D81324;
-                                        height: 38px;
-                                        " >
-                                        <i class="fas fa-comment-dots" style="color: #fff;"></i>
-                                        </a>
+
                             </div>
 
                     </div>

@@ -1,15 +1,21 @@
 <template>
     <div>
+            <vue-confirm-dialog></vue-confirm-dialog>
+
         <div class="container checkoutBox">
     <div class="row">
                 <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12">
                     <div class="box">
                         <h3 class="text-primary text-uppercase mb-3">Products in your cart</h3>
                         <div class="plan-selection" v-for="item in items" :key="item.id">
+
+
                             <div class="plan-data" v-if="item.name">
                                 <label for="question1">{{item.name}}</label>
                                     <span class="plan-price text-primary">
-                                        Price: {{item.price * item.quantity}} MAD
+                                        Price: {{item.price * item.quantity}} MAD <br>
+
+                                        <button class="btn btn-primary"  @click="handleClick(item.cart_id)">delete</button>
                                     </span>
                                 <p class="plan-text">
 
@@ -166,7 +172,31 @@
                {
                    this.$toastr.e('User info incomplete');
                }
-           }
+           },
+
+                       handleClick(id){
+      this.$confirm(
+        {
+          message: `Are you sure?`,
+          button: {
+            no: 'No',
+            yes: 'Yes'
+          },
+          /**
+          * Callback Function
+          * @param {Boolean} confirm
+          */
+          callback: confirm => {
+            if (confirm) {
+              axios.delete('/order/delete/'+id).then(response => {
+                this.getCartItems()
+              });
+
+            }
+          }
+        }
+      )
+    },
        },
        created(){
            this.getCartItems();

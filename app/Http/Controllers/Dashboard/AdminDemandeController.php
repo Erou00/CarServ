@@ -6,7 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Demande;
 use App\Models\Service;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use \PDF;
+
+
 
 class AdminDemandeController extends Controller
 {
@@ -97,14 +103,14 @@ class AdminDemandeController extends Controller
 
         //broadcast(new PrivateVidangeEnAttente($vidanges))->toOthers();
 
-        // $details = [
-        //     'commentaire' => $request->commentaire
-        // ];
+        $details = [
+            'commentaire' => $request->comment
+        ];
 
-        // $subject = 'Votre demande est '.$request->etat;
-        // //dd($details['id']);
-        // Mail::to('alixander.rofix@gmail.com')
-        // ->send(new \App\Mail\ConfirmMail($details,$subject));
+        $subject = 'Your demande '.$request->etat;
+        //dd($details['id']);
+        Mail::to($demande->user->email)
+        ->send(new \App\Mail\ConfirmMail($details,$subject));
 
         $demande->update();
 
@@ -170,5 +176,36 @@ class AdminDemandeController extends Controller
         ]);
     }
 
+
+    public function demandeInvoice($id)
+    {
+        # code...
+        $demande = Demande::find($id);
+
+
+        $data = [
+            'invoice-date' => Carbon::now()->format('d/m/Y'),
+            'name'     => ucfirst($demande->user->first_name).' '.ucfirst($demande->user->last_name) ,
+            'email'     => $demande->user->email,
+            'phone'     => $demande->user->phone_number,
+            'cin'     => $demande->user->cin,
+            'adress'     => $demande->user->adress,
+            'car'     =>$demande->car->marque->name .' '.$demande->car->model->mode,
+
+            'services'     => $demande->services,
+            'date'  => date('d/m/Y', strtotime($demande->date))
+        ];
+
+            //dd($data);
+
+        //     $pdf = PDF::loadView('fiche', array('data' => $data));
+        //     return $pdf->download('invoice.pdf');
+
+        //$pdf = App::make('dompdf.wrapper');
+        ini_set('max_execution_time', 300);
+        $pdf = \PDF::loadView('dashboard/invoice', array('data' => $data));
+        return $pdf->stream();
+
+    }
 
 }

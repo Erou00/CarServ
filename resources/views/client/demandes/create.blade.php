@@ -237,31 +237,23 @@ ul.form-stepper li a .form-stepper-circle {
 
 
                             @foreach ($services as $service)
-                                <button id="htmlbtn{{$service->id}}" class="htmlbtn" value="{{$service->id}}">
+                                <button id="htmlbtn{{$service->id}}" class="htmlbtn mb-2" value="{{$service->id}}">
 
                                     <h4>{{$service->name}}</h4>
-                                    <p style="word-break: break-all">{{$service->description}}
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                    Quam, eligendi odit excepturi neque consectetur itaque explicabo
-                                    beatae debitis dolores consequatur magnam placeat fugit repellendus
-                                    inventore fugiat numquam distinctio repudiandae ex.
+                                    <p style="word-break: break-all">
+                                        {{substr(strip_tags($service->description),0,120)}}..
                                     </p>
                                     <hr>
 
                                     <p class="fh5co-property-specification">
-                                        <span><strong>Price : </strong>{{$service->price}}MAD </span>||
-                                        <span>Home Service : <strong>
+                                        <span><strong>Price : </strong>{{$service->price}}MAD </span>
 
-                                            @if ($service->home_service)
-                                                <i class="fa fa-check" style="color: rgb(0, 173, 0)"></i>
-                                            @else
-                                                No
-                                            @endif
-                                        </strong></span>
+
 
                                     </p>
 
                                 </button>
+
                             @endforeach
 
 

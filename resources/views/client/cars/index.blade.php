@@ -224,8 +224,6 @@
                                    </a>
 
 
-                                   <a href="" class="btn btnV text-wihte"><i class="fas fa-oil-can"></i>
-                                   </a>
 
 
                            </div>

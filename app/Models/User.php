@@ -29,7 +29,7 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $appends = ['image_path'];
+    protected $appends = ['image_path','avatar'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -49,6 +49,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
 
     public function roles()
     {
@@ -133,6 +135,16 @@ class User extends Authenticatable
 
     public function orders() {
         return $this->hasMany(Order::class);
+    }
+
+
+
+    public function getAvatarAttribute()
+    {
+
+        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) );
+
+
     }
 
 }

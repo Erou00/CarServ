@@ -126,4 +126,6 @@
      <script src="{{asset('assets/js/pages/demo.datatable-init.js')}}"></script>
 
 
+
+
 @endsection

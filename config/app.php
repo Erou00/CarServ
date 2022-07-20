@@ -183,6 +183,10 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         // Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
 
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Yoeunes\Toastr\ToastrServiceProvider::class,
+
+
         /*
          * Package Service Providers...
          */
@@ -214,6 +218,9 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         // 'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+
+
 
     ])->toArray(),
 

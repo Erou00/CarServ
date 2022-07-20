@@ -39,7 +39,7 @@ Route::group([
 
     Route::controller(ChatController::class)->prefix('chat')->name('chat.')->group(function () {
 
-        Route::get('/{id?}', 'chatPage')->name('chatPage');
+        Route::match(['get', 'post'],'/', 'chatPage')->name('chatPage');
         Route::get('/private-user-messages/{userId}/{carId}', 'privateUserMessages')->name('messages');
         Route::post('/private-user-messages/{id}', 'sendPrivateMessage');
 
@@ -51,6 +51,7 @@ Route::group([
 
     Route::get('/orders',[CartController::class,'orders'])->name('clientOrders');
 
+    Route::delete('/order/delete/{id}',[CartController::class,'delete']);
 
 });
 Auth::routes();

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -52,6 +53,7 @@ class HomeController extends Controller
                         return $q->where('price','<=' , $request->maxPrice);
                      })
                      ->where('for_sale',true)
+                     ->where('validate',true)
                     ->paginate(6);
 
          return view('carForSale',[
@@ -93,6 +95,15 @@ class HomeController extends Controller
 
 
         return view('products.details')->with('product',$product);
+    }
+
+
+    public function serviceDetails($id)
+    {
+        # code...
+        $service = Service::find($id);
+
+        return view('services.details')->with('service',$service);
     }
 
     public function models(Request $request)

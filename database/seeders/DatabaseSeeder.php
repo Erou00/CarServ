@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CarbirantTable::class);
         $this->call(OriginTable::class);
         $this->call(KilometerSeeder::class);
+        $this->call(MarkTableSeeder::class);
+        $this->call(ModelTableSeeder::class);
         Product::factory(25)->create();
 
     }

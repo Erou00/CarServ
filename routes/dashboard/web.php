@@ -7,6 +7,10 @@ use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\MechanicController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ServiceController;
+use App\Models\Car;
+use App\Models\Demande;
+use App\Models\Product;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +29,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('dashboard')->middleware(['auth','admin'])->name('dashboard.')->group(function ($router) {
     Route::get('/', function () {
-        return view('dashboard.index');
+
+        $rolesM = Role::where('name','=','mecanicien')->first();
+        $rolesC = Role::where('name','=','client')->first();
+        $mecaniciens = $rolesM->users()->get();
+        $client = $rolesC->users()->get();
+        return view('dashboard.index', [
+            'users'=> $client,
+            'vehicules'=> Car::all(),
+            'mecaniciens'=>$mecaniciens,
+            'vidanges'=> Demande::all(),
+            'demandeEnattents'=> Demande::where('etat','In progress')->get(),
+            'validees'=> Demande::where('etat','!=','In progress')
+
+                                    ->where('etat','!=','Handling')
+                                    ->where('etat','!=','Completed')
+                                    ->where('etat','!=','Refused')->get(),
+            'refusees'=> Demande::where('etat','Refused')->get(),
+            'products'=>Product::all(),
+
+        ]);;
     });
 
 
@@ -46,6 +69,9 @@ Route::prefix('dashboard')->middleware(['auth','admin'])->name('dashboard.')->gr
         Route::get('/update-demande/{id}','updateDemandeByAdminGet')->name('updateDemandeByAdminGet');
         Route::post('/update-demande/{id}','updateDemandeByAdminPost')->name('updateDemandeByAdminPost');
 
+        Route::get('invoice/{id}','demandeInvoice')->name('invoiceDemande');
+
+
     });
 
     Route::controller(AdminOrderController::class)->prefix('orders')->name('order.')->group(function () {
@@ -62,13 +88,21 @@ Route::prefix('dashboard')->middleware(['auth','admin'])->name('dashboard.')->gr
     Route::resource('services',ServiceController::class);
     Route::controller(CarController::class)->group(function () {
 
-        Route::get('for_sale','carForSale')->name('carForSale');
+        Route::get('cars/for_sale','carForSale')->name('carForSale');
+
+        Route::post('cars/for_sale/validate/{id}','carValidate')->name('validateCar');
         Route::resource('cars',CarController::class);
 
     });
 
 
     Route::resource('products',ProductController::class);
+    Route::get('product/out-stock', [ProductController::class, 'trashed'])->name('products.trashed');
+    Route::get('product/restore/{id}', [ProductController::class, 'restore'])->name('products.restore');
+
+
+
+
     Route::resource('mechanics',MechanicController::class);
     Route::resource('demandes',ServiceController::class);
 

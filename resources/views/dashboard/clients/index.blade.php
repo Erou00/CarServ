@@ -10,7 +10,22 @@
 @endsection
 
 @section('content')
-
+  <!-- start page title -->
+  <div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="{{url('/')}}">Car service</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Client</li>
+                </ol>
+            </div>
+            <h4 class="page-title">Clients</h4>
+        </div>
+    </div>
+</div>
+<!-- end page title -->
 
 
 <div class="row mt-3">

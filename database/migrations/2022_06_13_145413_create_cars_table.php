@@ -34,6 +34,7 @@ return new class extends Migration
             $table->integer('price')->nullable();
             $table->string('slug')->unique()->nullable();
             $table->integer('user_id')->references('id')->on('users');
+            $table->boolean('validate')->nullable();
             $table->timestamps();
         });
     }

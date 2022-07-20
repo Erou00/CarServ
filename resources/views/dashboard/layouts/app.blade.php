@@ -21,7 +21,83 @@
         <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
         {{-- <link href="{{asset('assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="dark-style"> --}}
 
+
+
         @yield('styles')
+
+        <style>
+            /*****************************/
+/* MESSAGE BOX RELATED CLASS */
+/*          (START)          */
+/*****************************/
+.msgbox-area {
+  max-height: 100%;
+  position: fixed;
+  bottom: 15px;
+  left: 20px;
+  right: 20px;
+}
+.msgbox-area .msgbox-box {
+  font-size: inherit;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 18px 20px;
+  margin: 0 0 15px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.65);
+  transition: opacity 300ms ease-in;
+}
+.msgbox-area .msgbox-box.msgbox-box-hide {
+  opacity: 0;
+}
+.msgbox-area .msgbox-box:last-child {
+  margin: 60px 0;
+}
+.msgbox-area .msgbox-content {
+  flex-shrink: 1;
+}
+.msgbox-area .msgbox-close {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 0 0 0 20px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  position: relative;
+  transition: text-shadow 225ms ease-out;
+}
+.msgbox-area .msgbox-close:hover {
+  text-shadow: 0 0 3px #efefef;
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .msgbox-area {
+    left: 80px;
+    right: 80px;
+  }
+}
+@media (min-width: 768px) {
+  .msgbox-area {
+    width: 480px;
+    height: 0;
+    top: 15px;
+    left: auto;
+    right: 15px;
+  }
+}
+/*****************************/
+/* MESSAGE BOX RELATED CLASS */
+/*           (END)           */
+/*****************************/
+
+
+.msgbox-area {
+  font-size: 16px;
+}
+        </style>
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
@@ -49,8 +125,9 @@
                         @yield('content')
 
                     </div>
-                    <!-- container -->
 
+                    <!-- container -->
+                 <demande-notification :user="{{Auth::user()}}"></demande-notification>
                 </div>
                 <!-- content -->
 
@@ -107,7 +184,16 @@
 
         <script src="{{asset('js/app.js')}}"></script>
 
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
            @yield('scripts')
 
+
+
+
     </body>
+
+    @jquery
+@toastr_js
+@toastr_render
 </html>
