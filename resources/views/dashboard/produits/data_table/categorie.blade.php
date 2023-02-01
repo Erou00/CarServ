@@ -1,0 +1,1 @@
+{{$produit->categorie->nom}}

@@ -1,89 +1,84 @@
-@extends('layouts.app')
-@section('content')
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>GESTION DE STOCK</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/login.css')}}">
+
+</head>
+<body>
+	<div class="full-page">
+		<div class="heading  p-auto text-dark top-0 start-0 py-4">
+			<!-- <img src="../Capture1.PNG" alt="" width="100%"> -->
+			<h2 class="my-0">
+                <img src="{{ asset('assets/images/logo2.jpg') }}" alt="" srcset=""
+                style="width: 300px;height: 100px;">
+            </h2>
+			<h3 class="my-0"></h3>
+		</div>
+		<div class="body-content">
+			<!-- <div class="body-h pt-5">
+				<h2 class=""></h2>
+			</div> -->
+
+			<div class="body-msg-bar  text-light py-1">
+				<p class="my-0">AUTENTIFICATION</p>
+				<p class="my-0"></p>
+			</div>
+
+			<!-- <div class="body-form-container container"> -->
+				<form action="{{ route('login') }}" method="post" class="body-form  card border p-0 mt-5">
+					@csrf
 
 
-
-
-<!-- Booking Start -->
-<div class="container-fluid bg-secondary booking my-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container">
-        <div class="row gx-5">
-            <div class="col-lg-6 py-5">
-                <div class="py-5">
-                    <h1 class="text-white mb-4">Certified and Award Winning Car Repair Service Provider</h1>
-                    <p class="text-white mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
-                    <h1 class="text-white mb-4">Sign In</h1>
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="row g-3">
-
-
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-                                    <div class=""  data-target-input="nearest">
-                                        <input type="email" name="email"
-                                            class="form-control border-0 @error('email') is-invalid @enderror "
-                                            placeholder="Email"   style="height: 55px;"  required>
-                                    </div>
-
-                                    @error('email')
-                                    <span class="invalid-feedback text-white" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-
-                            </div>
-
-
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-                                    <div class=""  data-target-input="nearest">
-                                        <input type="password" name="password"
-                                            class="form-control border-0 @error('password') is-invalid @enderror"
-                                               style="height: 55px;" placeholder="Password">
-                                    </div>
-
-                                    @error('password')
-                                    <span class="invalid-feedback text-white" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                        <label class="form-check-label text-white" for="remember">
-                                            {{ __('Remember Me') }}
-                                        </label>
-
-                                </div>
-                            </div>
-
-
-                            <div class="row">
-                                <div class="col-12 col-sm-12">
-                                    <button class="btn btn-secondary  py-3 col-12 col-sm-12" type="submit">Sign In</button>
-                                </div>
-                            </div>
-
+                    <div class="py-4">
+                        <div class="form-control border-0 ">
+                            <label for="user" class="">
+                                Compte utilisateur :
+                            </label>
+                            <input type="email" class="@error('email') is-invalid @enderror" id="user" name="email" style="height: 18px;">
+                            @error('email')
+                            <span class="invalid-feedback ms-5" role="alert">
+                                {{ $message }}
+                            </span>
+                            @enderror
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Booking End -->
+                        <div class="form-control border-0">
+                            <label for="" class="">
+                                Mot de passe :
+                            </label>
+                            <input type="password" class="@error('password') is-invalid @enderror" id="pss" name="password" style="height: 18px;">
+                        </div>
+
+                    </div>
+					<div class="form-btn container form-control  rounded-0 rounded-bottom text-center">
+						<!-- <div class=" border-0"> -->
+
+									<button type="submit" class="btn border py-0 bg-light" id="" name="" >
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock-fill" viewBox="0 0 16 16" style="color: #dcb131;">
+											<path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2z"/>
+										</svg>
+										Connexion
+									</button>
 
 
-@endsection
+
+						<!-- </div> -->
+					</div>
+				</form>
+			<!-- </div> -->
+
+			<footer class="bg-light fixed-bottom text-center p-3">
+				<a href="{{ route('password.request') }}" class="text-dark mx-3">Mot de passe oublié ?</a>
+                {{-- {{ route('password.request') }} --}}
+            </footer>
+
+
+		</div>
+	</div>
+
+
+</body>
+</html>

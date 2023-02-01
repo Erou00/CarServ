@@ -1,0 +1,67 @@
+*{
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.heading{
+    background-color: #fff;
+    text-align: center;
+}
+
+.heading h3{
+    font-size: larger;
+}
+
+.body-h{
+    text-align: center;
+    color: rgb(245, 174, 87);
+    /* font-size: small; */
+
+}
+
+.body-h h2{
+    font-size: large;
+    font-weight: bold;
+}
+
+.body-msg-bar{
+    background-color: rgb(82, 36, 36);
+    text-align: center;
+}
+/*
+.body-form-container{
+    width: 45%;
+    margin-top: 1.5rem;
+} */
+
+/* .body-form-container .body-form{ */
+.body-form{
+    width: 30%;
+    margin-top: 1.5rem;
+    margin: auto;
+}
+
+/* .body-form-container .body-form label{  */
+.body-form label{
+    width: 40%;
+    font-size: 80%;
+    font-weight: 400;
+    text-align: end;
+}
+
+.body-form input{
+    width: 50%;
+    padding: 0 1%;
+}
+
+.form-btn a{
+    font-size: 80%;
+}
+
+.form-btn{
+    background-color: #ebebd1;
+}

@@ -2,45 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use SoftDeletes;
 
 class Service extends Model
 {
-    use HasFactory;
 
-    protected $fillable = [
-
-        'image',
-        'name',
-        'home_service',
-        'price',
-        'description'
-
-    ];
-
-    protected $appends = ['image_path'];
-
-
+    protected $table = 'services';
     public $timestamps = true;
 
+    protected $fillable = ['id','nom'];
 
 
-    protected $dates = ['deleted_at'];
-
-
-    public function getImagePathAttribute()
+    public function users()
     {
-        # code...
-        return asset('uploads/services_images/'.$this->image);
+        return $this->hasMany(User::class);
     }
 
-    public function demandes()
-    {
-        # code...
-        return $this->belongsToMany(Demande::class);
-    }
 }
-
-

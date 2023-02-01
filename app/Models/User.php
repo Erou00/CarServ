@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -18,23 +20,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
-        'last_name',
-        'first_name',
-        'cin',
+        'utilisateur',
+        'nom',
+        'prenom',
         'email',
-        'adress',
-        'phone_number',
-        'image',
         'password',
+        'magasin_id',
     ];
 
-    protected $appends = ['image_path','avatar'];
-
     /**
-     * The attributes that should be hidden for arrays.
+     * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -42,9 +39,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
@@ -52,99 +49,142 @@ class User extends Authenticatable
 
 
 
-    public function roles()
+    public function categories()
     {
         # code...
-        return $this->belongsToMany('App\Models\Role');
+        return $this->belongsToMany(Categorie::class);
+    }
+    //scope
+    public function scopeWhenRolesId($query, $roleId)
+    {
+        return $query->when($roleId, function ($q) use ($roleId) {
+
+            return $q->whereHas('roles', function ($qu) use ($roleId) {
+
+                return $qu->where('roles.id', $roleId);
+            });
+        });
+    } // end of scopeWhenRolesId
+
+
+    public function produits()
+    {
+        return $this->hasMany(Produit::class);
     }
 
+    //scope
+    public function scopeWhenServiceId($query, $serviceId)
+    {
+        return $query->when($serviceId, function ($q) use ($serviceId) {
 
+            return $q->whereHas('service', function ($qu) use ($serviceId) {
 
-    public function hasAnyRoles($roles)
+                return $qu->where('services.id', $serviceId);
+            });
+        });
+    } // end of scopeWhenServicesId
+
+    public function historiqueProduit()
     {
         # code...
-        if($this->roles()->whereIn('name',$roles)->first()){
-            return true;
-        }
-        return false;
+        return $this->hasMany(HistoriqueProduit::class);
     }
 
-    public function hasRole($role)
+    public function commandes()
     {
         # code...
-        if($this->roles()->where('name',$role)->first()){
-            return true;
-        }
-        return false;
+        return $this->hasMany(Commande::class);
     }
 
-
-    public function getFirstNameAttribute($value)
+    public function historiqueCommandes()
     {
         # code...
-        return ucfirst($value);
-    }
-
-    public function getLastNameAttribute($value)
-    {
-        # code...
-        return ucfirst($value);
-    }
-
-    public function getImagePathAttribute()
-    {
-        # code...
-        return asset('uploads/users_images/'.$this->image);
-    }
-
-    public function cars()
-    {
-        # code..
-        return $this->hasMany(Car::class);
+        return $this->hasMany(HistoriqueComande::class);
     }
 
     public function demandes()
     {
-        # code..
+        # code...
         return $this->hasMany(Demande::class);
     }
 
-    public function Mdemandes()
+    public function historiqueDemandes()
     {
-        # code..
-        return Demande::where('mechanic_id',$this->id)->get();
+        # code...
+        return $this->hasMany(HistoriqueDemande::class);
     }
 
-    public function MAdemandes()
+
+    public function conventions()
     {
-        # code..
-        return Demande::where('mechanic_id',$this->id)->where('etat','Affected')->get();
+        # code...
+        return $this->hasMany(Convention::class);
     }
 
-    public function MACdemandes()
+    public function marches()
     {
-        # code..
-        return Demande::where('mechanic_id',$this->id)->where('etat','Completed')->get();
+        # code...
+        return $this->hasMany(Marche::class);
     }
 
-    public function messages()
+    public function entrers()
     {
-        # code..
-        return $this->hasMany(Message::class);
-    }
-
-    public function orders() {
-        return $this->hasMany(Order::class);
+        # code...
+        return $this->hasMany(Entrer::class);
     }
 
 
 
-    public function getAvatarAttribute()
+    public function bls()
     {
-
-        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $this->email ) ) );
-
-
+        # code...
+        return $this->hasMany(Bl::class);
     }
+    public function bs()
+    {
+        # code...
+        return $this->hasMany(Bs::class);
+    }
+
+
+    public function factures()
+    {
+        # code...
+        return $this->hasMany(Facture::class);
+    }
+
+    public function blDetails()
+    {
+        # code...
+        return $this->hasMany(BlDetail::class);
+    }
+
+    public function bsDetails()
+    {
+        # code...
+        return $this->hasMany(BsDetail::class);
+    }
+
+    public function inventaires()
+    {
+        # code...
+        return $this->hasMany(Inventaire::class);
+    }
+
+
+
+
+    public function magasin()
+    {
+        # code...
+        return $this->belongsTo(Magasin::class);
+    }
+
+    public function sousmagasins()
+    {
+        # code...
+        return $this->belongsToMany(SousMagasin::class);
+    }
+
 
 }

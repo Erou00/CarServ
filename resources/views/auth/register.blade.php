@@ -1,151 +1,139 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-@section('content')
+    <!-- Scripts -->
+    <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
 
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
 
+                    </ul>
 
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
 
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
 
-
-
-
-
-
-
-
-
-<!-- Booking Start -->
-<div class="container-fluid bg-secondary booking my-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container">
-        <div class="row gx-5">
-            <div class="col-lg-6 py-5">
-                <div class="py-5">
-                    <h1 class="text-white mb-4">Certified and Award Winning Car Repair Service Provider</h1>
-                    <p class="text-white mb-0">Eirmod sed tempor lorem ut dolores. Aliquyam sit sadipscing kasd ipsum. Dolor ea et dolore et at sea ea at dolor, justo ipsum duo rebum sea invidunt voluptua. Eos vero eos vero ea et dolore eirmod et. Dolores diam duo invidunt lorem. Elitr ut dolores magna sit. Sea dolore sanctus sed et. Takimata takimata sanctus sed.</p>
+                        @endguest
+                    </ul>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
-                    <h1 class="text-white mb-4">Sign Up</h1>
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <div class="row g-3">
+        </nav>
 
+        <main class="py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">{{ __('Register') }}</div>
 
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-                                    <div class=""  data-target-input="nearest">
-                                        <input type="text" name="first_name"
-                                            class="form-control border-0 @error('first_name') is-invalid @enderror "
-                                               style="height: 55px;" placeholder="First Name" required>
+                            <div class="card-body">
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
+
+                                    <div class="row mb-3">
+                                        <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
 
-                                    @error('first_name')
-                                    <span class="invalid-feedback text-white" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                    <div class="row mb-3">
+                                        <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
+                                        <div class="col-md-6">
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-                            </div>
-
-
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-                                    <div class=""  data-target-input="nearest">
-                                        <input type="text" name="last_name"
-                                            class="form-control border-0 @error('last_name') is-invalid @enderror "
-                                               style="height: 55px;" placeholder="Last Name" required>
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
 
-                                    @error('last_name')
-                                    <span class="invalid-feedback text-white" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                    <div class="row mb-3">
+                                        <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
+                                        <div class="col-md-6">
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-                                    <div class=""  data-target-input="nearest">
-                                        <input type="email" name="email"
-                                            class="form-control border-0 @error('email') is-invalid @enderror "
-                                               style="height: 55px;" placeholder="Email" required>
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
 
-                                    @error('email')
-                                    <span class="invalid-feedback text-white" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                    <div class="row mb-3">
+                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
-
-                            </div>
-
-
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-                                    <div class=""  data-target-input="nearest">
-                                        <input type="password" name="password"
-                                            class="form-control border-0 @error('password') is-invalid @enderror"
-                                               style="height: 55px;" placeholder="Password">
+                                        <div class="col-md-6">
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                        </div>
                                     </div>
 
-                                    @error('password')
-                                    <span class="invalid-feedback text-white" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-                            <div class="row mb-3">
-                                <div class="col-12 col-sm-12">
-                                    <div class=""  data-target-input="nearest">
-                                        <input type="password" name="password_confirmation"
-                                            class="form-control border-0"
-                                               style="height: 55px;" placeholder="Confirm Password">
+                                    <div class="row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Register') }}
+                                            </button>
+                                        </div>
                                     </div>
-
-                                    @error('password')
-                                    <span class="invalid-feedback text-white" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
+                                </form>
                             </div>
-
-
-
-
-
-                            <div class="row">
-                                <div class="col-12 col-sm-12">
-                                    <button class="btn btn-secondary  py-3 col-12 col-sm-12" type="submit">Sign Up</button>
-                                </div>
-                            </div>
-
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+
+        </main>
     </div>
-</div>
-<!-- Booking End -->
 
 
-
-
-
-@endsection
+</body>
+</html>

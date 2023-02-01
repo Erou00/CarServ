@@ -1,80 +1,215 @@
-@extends('dashboard.layouts.app')
-
+@extends('layouts.dashboard.app')
 
 @section('styles')
 
-<link href="{{asset('assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css">
-<link href="{{asset('assets/css/vendor/responsive.bootstrap5.css')}}" rel="stylesheet" type="text/css">
-
-
-
 @endsection
-
 @section('content')
+<section class="search-sec">
+    <div class="container">
 
-  <!-- start page title -->
-  <div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="{{url('/')}}">Car service</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('/dashboard')}}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Demandes</li>
-                </ol>
-            </div>
-            <h4 class="page-title">Demandes</h4>
-        </div>
+                <form action="" method="post">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                            <input type="text" class="form-control search-slt no_commande ms-3"
+                                placeholder="N° Commande">
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                            <input type="date" class="form-control search-slt date"
+                            style="width: 146px !important">
+                        </div>
+                        <div class="col-lg-4 col-md-3 col-sm-12 p-0">
+                            <select class="form-control ms-4 search-slt entite"
+                                id="exampleFormControlSelect1">
+                                <option value="">Choissisez une entite</option>
+                                @foreach ($entites as $e)
+                                    <option value="{{$e->id}}">{{$e->nom}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2 col-md-3 col-sm-12 p-0">
+                            <select class="form-control ms-4 search-slt annee"
+                                id="exampleFormControlSelect1">
+                                @foreach ($annees as $annee)
+                                    <option value="{{$annee->annee}}"  {{ $annee->annee == \Carbon\Carbon::now()->format('Y') ? 'selected' : ''  }}><strong>Année :</strong> {{$annee->annee}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+
     </div>
-</div>
-<!-- end page title -->
+</section>
+
+<section class=" mt-3" >
+
+    <div class="container">
+
+
+        <div class="row mb-2">
+            <div class="col-md-4 offset-md-8 formButton" style="text-align: end;">
+
+
+                    <select name="sous_magasin" class="form-control sous_magasin"   id="sous_magasin_id">
+                        <option value="">Sous Magasin</option>
+                        @foreach (Auth::user()->sousmagasins as $m)
+                             <option value="{{ $m->id }}">{{ $m->nom }}</option>
+                        @endforeach
+                    </select>
+
+
+            </div>
+        </div>
+
+        <table class="datatable cell-border" id="commandes-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>N°Commande</th>
+                    <th>Magasin</th>
+                    <th>Date</th>
+                    <th>Entite</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+        </table>
+
+    </div>
 
 
 
 
-
-<!-- row -->
-<div class="row mt-3">
-    <div class="col-12">
-        <div class="card" >
-            <div class="card-body">
-                <div class="row mb-2">
-
-                </div>
-
-                {{-- {{dd(Auth::user())}} --}}
-
-                <demandes  :user="{{Auth::user()}}"></demandes>
-
-
-
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-    </div> <!-- end col -->
-</div>
-<!-- end row -->
-
-
-
-@endsection
-
-
-
-@section('scripts')
-<!-- plugin js -->
-<script src="{{asset('assets/js/vendor/dropzone.min.js')}}"></script>
-<!-- init js -->
-<script src="{{asset('assets/js/ui/component.fileupload.js')}}"></script>
-
-     <script src="{{asset('assets/js/vendor/jquery.dataTables.min.js')}}"></script>
-     <script src="{{asset('assets/js/vendor/dataTables.bootstrap5.js')}}"></script>
-     <script src="{{asset('assets/js/vendor/dataTables.responsive.min.js')}}"></script>
-     <script src="{{asset('assets/js/vendor/responsive.bootstrap5.min.js')}}"></script>
-
-     <!-- third party js ends -->
-
-     <!-- demo app -->
-     <script src="{{asset('assets/js/pages/demo.datatable-init.js')}}"></script>
+</section>
 
 
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+
+            $('.entite').select2();
+            table = $('#commandes-table').DataTable({
+                dom: "tiplr",
+                lengthMenu: [
+                    [25, 100, -1],
+                    [25, 100, "TOUS"]
+                ],
+                "language": {
+                "url": "{{ asset('assets/datatable-lang/fr.json') }}"
+            },
+                pageLength: 25,
+                serverSide: true,
+                processing: true,
+                ajax: {
+                    url: '{{ route('demandes.index') }}',
+                    data: function(d) {
+                        d.no_commande = $('.no_commande').val()
+                        d.date = $('.date').val()
+                        d.entite_id = $('.entite').val()
+                        d.annee = $('.annee').val()
+                        d.magasin_id = $('.magasin').val()
+                        d.sous_magasin_id = $('.sous_magasin').val()
+                    }
+                },
+                columns: [
+                    {
+                        className: 'dt-control',
+                        orderable: false,
+                        data: null,
+                        defaultContent: '',
+                        width: '2%',
+                    },
+                    {
+                        data: 'no_commande',
+                        name: 'no_commande',
+                        width: '12%',
+                    },
+                    {
+                        data: 'magasin',
+                        name: 'magasin',
+                    },
+
+                    {
+                        data: 'date_commande',
+                        name: 'date_commande',
+                        width: '10%',
+                    },
+                    {
+                        data: 'entite',
+                        name: 'entite'
+                    },
+
+                    {
+                        data: 'actions',
+                        name: 'actions',
+                        searchable: false,
+                        sortable: false,
+                        width: '10%',
+
+
+                    },
+
+
+                ]
+            });
+
+            $('#commandes-table tbody').on('click', 'td.dt-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(row.data().commande_details).show();
+                    tr.addClass('shown');
+                }
+            });
+
+            $(".no_commande").keyup(function() {
+                table.draw();
+            });
+            $(".date").on('change',function() {
+                table.draw();
+            });
+            $(".entite").on('change',function() {
+                table.draw();
+            });
+            $(".annee").on('change',function() {
+                table.draw();
+            });
+
+            // $(".magasin").on('change',function() {
+            //     if($(this).val() != '')
+            //     {
+            //     var select = $(this).attr("id");
+            //     var value = $(this).val();
+            //     var dependent = $(this).data('dependent');
+            //     var _token = "{{ csrf_token() }}";
+
+            //     $.ajax({
+            //         url:"{{route('sous_magasins.getSousMagasins')}}",
+            //         method:"POST",
+            //         data:{select:select, value:value, _token:_token, dependent:dependent},
+            //         success:function(result)
+            //         {
+            //         $('#'+dependent).html(result);
+            //         }
+            //     })
+            //     }
+            //     table.draw();
+            // });
+
+            $(".sous_magasin").on('change',function() {
+                table.draw();
+            });
+
+        });
+    </script>
+@endpush

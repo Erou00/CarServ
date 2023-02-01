@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Car;
-use App\Models\Product;
-use App\Models\Service;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
-use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -19,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->only('index');
+        $this->middleware('auth');
     }
 
     /**
@@ -32,96 +28,45 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function carForSale(Request $request)
+    public function updateProfile(Request $request)
     {
         # code...
+        //dd($request->all());
+           # Validation
+        if ($request->new_password != null  && $request->old_password != null) {
+            # code...
+           $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+            ]);
 
-        $marques = DB::table('marks')
-        ->get();
+             #Match The Old Password
+            if(!Hash::check($request->old_password, auth()->user()->password)){
+                return back()->with("error", "L'ancien mot de passe ne correspond pas");
+            }
 
+            #Update the new Password
+            User::whereId(auth()->user()->id)->update([
+                'nom' => $request->nom,
+                'prenom' => $request->prenom,
+                'email' => $request->email,
+                'password' => Hash::make($request->new_password)
+            ]);
 
-        $cars = Car::when($request->mark_id, function($q)use ($request){
-                        return $q->where('marque_id',  $request->mark_id);
-                    })
-                    ->when($request->model_id, function($q)use ($request){
-                       return $q->where('model_id',  $request->model_id);
-                    })
-                    ->when($request->minPrice, function($q)use ($request){
-                        return $q->where('price','>=' , $request->minPrice);
-                     })
-                     ->when($request->maxPrice, function($q)use ($request){
-                        return $q->where('price','<=' , $request->maxPrice);
-                     })
-                     ->where('for_sale',true)
-                     ->where('validate',true)
-                    ->paginate(6);
-
-         return view('carForSale',[
-            'marques' => $marques,
-            'cars' => $cars
-         ]);
-
-
-    }
-
-
-    public function carDetails($slug)
-    {
-        # code...
-        $car = Car::where('slug','like',''.$slug.'%')
-                    ->first();
-
-
-        return view('car-details')->with('car',$car);
-    }
-
-    public function products(Request $request)
-    {
-        # code...
-        $products =  Product::when($request->search, function($q)use ($request){
-                            return $q->where('name','like',  '%'.$request->search.'%');
-                        })
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(6);
-
-        return view('products.index',['products'=>$products]);
-    }
-
-    public function productDetails($slug)
-    {
-        # code...
-        $product = Product::where('slug','like',''.$slug.'%')
-                    ->first();
-
-
-        return view('products.details')->with('product',$product);
-    }
-
-
-    public function serviceDetails($id)
-    {
-        # code...
-        $service = Service::find($id);
-
-        return view('services.details')->with('service',$service);
-    }
-
-    public function models(Request $request)
-    {
-        //
-        $select = $request->get('select');
-        $value = $request->get('value');
-        $dependent = $request->get('dependent');
-        $data = DB::table('cmodels')
-          ->where('MarqueId',$value)
-          ->get();
-
-        // Select '.ucfirst($dependent).
-        $output = '<option value="">Choose</option>';
-        foreach($data as $row)
-        {
-         $output .= '<option value="'.$row->id.'">'.$row->$dependent.'</option>';
+        }else{
+            User::whereId(auth()->user()->id)->update([
+                'nom' => $request->nom,
+                'prenom' => $request->prenom,
+                'email' => $request->email,
+            ]);
         }
-        echo $output;
+
+
+
+
+
+
+
+        return back()->with("status", "Modifier avec succès!");
     }
 }

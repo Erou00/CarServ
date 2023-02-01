@@ -8,42 +8,59 @@ use Illuminate\Database\Eloquent\Model;
 class Demande extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'car_id',
-        'date',
-        'address',
-        'commente',
-        'motif',
-        'user_id',
-        'admin_id',
-        'mecanicien_id'
-
-    ];
-
-    public function car()
-    {
-        # code..
-        return $this->belongsTo(Car::class);
-    }
+    protected $fillable = ['id','no_commande','annee',
+    'date_commande',
+    'magasin_id',
+    'sous_magasin_id',
+    'entite_id','user_id','extern','imp','facture_id'];
+    public $timestamps = true;
 
 
     public function user()
     {
-        # code..
+        # code...
         return $this->belongsTo(User::class);
     }
 
-    public function mechanic()
-    {
-        # code..
-        return $this->belongsTo(User::class);
-    }
-
-
-    public function services()
+    public function entite()
     {
         # code...
-        return $this->belongsToMany(Service::class);
+        return $this->belongsTo(Entite::class);
+    }
+
+    public function demandeDetails()
+    {
+        # code...
+        return $this->hasMany(DemandeDetail::class);
+    }
+
+    public function historiqueDemandes()
+    {
+        # code...
+        return $this->hasMany(HistoriqueDemande::class);
+    }
+
+    public function bs()
+    {
+        # code...
+        return $this->hasMany(Bs::class);
+    }
+
+    public function magasin()
+    {
+        # code...
+        return $this->belongsTo(Magasin::class);
+    }
+
+    public function sousMagasin()
+    {
+        # code...
+        return $this->belongsTo(SousMagasin::class);
+    }
+
+    public function facture()
+    {
+        # code...
+        return $this->belongsTo(Facture::class);
     }
 }

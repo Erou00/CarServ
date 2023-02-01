@@ -16,14 +16,3 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-
-Broadcast::channel('privatechat.{id}', function ($user,$id) {
-
-    return auth()->check();
-});
-
-Broadcast::channel('privatedemande.{id}', function ($user,$id) {
-
-    return auth()->check();
-});
-
